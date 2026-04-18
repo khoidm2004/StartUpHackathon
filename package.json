@@ -16,6 +16,7 @@
   "dependencies": {
     "@langchain/core": "^1.1.15",
     "@langchain/groq": "^1.0.3",
+    "@supabase/supabase-js": "^2.103.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
