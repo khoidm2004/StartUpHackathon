@@ -7,101 +7,64 @@ export interface AnalysisResults {
   report4: string;
 }
 
-export const analysisPrompt = PromptTemplate.fromTemplate(`
-You are a Finland trend intelligence analyst. Provide a comprehensive and highly detailed
-report on the HOTTEST current trends, topics, and happenings in Finland right now.
+/**
+ * Single analyst pass: one structured report. Kept compact so four parallel runs
+ * stay focused; synthesis merges overlap across agents.
+ */
+export const analysisPrompt = PromptTemplate.fromTemplate(`You are a Finland trend analyst. Produce one report on what is most relevant in Finland **right now**, using the context as a framing hint.
 
-Cover ALL sections below with specific details, real names, cities, and concrete examples:
+**Audience:** busy executives. **Style:** concrete and scannable—name cities, companies, venues, people, or events when you can; mark uncertainty briefly instead of guessing.
 
-## 1. CITIES & LOCAL HOTSPOTS
-- What is trending in Helsinki, Tampere, Turku, Espoo, Oulu, and Rovaniemi?
-- Hottest neighborhoods, districts, markets, pop-up events, and urban developments
-- City-specific cultural shifts or lifestyle changes worth noting
+**Use exactly these seven sections** (## headings in this order). Each section: short intro sentence plus bullets or compact paragraphs—depth over filler.
 
-## 2. CULTURE, ARTS & ENTERTAINMENT
-- Hottest Finnish music artists, bands, or genres rising right now
-- Trending Finnish films, TV shows, podcasts on Yle Areena / Netflix / Spotify
-- Major art exhibitions, theatre productions, cultural festivals (Flow, Ruisrock, Helsinki Design Week)
-- What Finns are talking about on social media — viral moments, memes, debates
+## 1. Cities & local hotspots
+Major cities and regions (e.g. Helsinki capital region, Tampere, Turku, Oulu, Rovaniemi/Lapland): what locals and visitors care about—neighborhoods, retail, events, mobility, seasonal urban life.
 
-## 3. FOOD & DINING TRENDS
-- Hottest restaurants, cafés, or food concepts in Finnish cities right now
-- Trending ingredients, cuisines, or unique dining experiences
-- Popular food movements (plant-based, Nordic cuisine revival, local sourcing)
-- New Finnish food brands or products gaining traction
+## 2. Culture, arts & entertainment
+Music, publishing, games, film/TV/streaming, festivals, museums, theater; what is breaking through culturally or in social chatter.
 
-## 4. TECH, STARTUPS & INNOVATION
-- Hottest Finnish startups and scale-ups (recent funding rounds, launches, acquisitions)
-- What Nokia, Rovio, Supercell, Wolt, and other Finnish tech giants are doing
-- Finland's position in AI, gaming, cleantech, healthtech
-- Emerging technologies being adopted by Finnish companies
+## 3. Food & dining
+Restaurants, cafés, ingredients, movements (Nordic, plant-based, local), notable products or brands.
 
-## 5. BUSINESS & ECONOMY
-- Key economic trends affecting Finland currently
-- Industries that are booming or declining
-- Notable Finnish companies making headlines
-- Employment trends and workforce shifts
+## 4. Tech, startups & innovation
+Startups, scale-ups, funding or M&A if relevant, larger tech employers, AI/gaming/cleantech/health angles; how companies are adopting new tech.
 
-## 6. SOCIETY, POLITICS & LIFESTYLE
-- Major social debates or movements in Finland right now
-- Trending lifestyle topics: wellness, sustainability, housing, mental health
-- Political topics Finns are actively discussing
-- Changes in Finnish work culture or social norms
+## 5. Business & economy
+Macro themes, key sectors up or down, large employers in the news, jobs and skills.
 
-## 7. SPORTS & OUTDOOR ACTIVITIES
-- Trending sports or outdoor activities (current season)
-- Hot Finnish athletes or teams making news
-- Major upcoming or recent sporting events in Finland
+## 6. Society, politics & lifestyle
+Debates, policy, housing, welfare, environment, wellness, work-life norms—what Finns are arguing about or changing.
 
----
+## 7. Sports & outdoor life
+Current season / calendar; teams, athletes, major fixtures; outdoor culture relevant to the season.
 
-Be specific, data-driven, and professional. Write like a journalist briefing a C-suite executive.
-Give concrete examples for every section — do NOT be vague.
-
-Context: {context}
-`);
+Context: {context}`);
 
 export function buildSynthesisPrompt(reports: AnalysisResults): string {
-  return `
-You are a senior editorial analyst specializing in Finland. You have received four separate
-trend reports from four different AI analysts. Synthesize them into ONE definitive,
-polished Finland Trend Intelligence Brief.
+  const blocks = [
+    ["A", reports.report1],
+    ["B", reports.report2],
+    ["C", reports.report3],
+    ["D", reports.report4],
+  ] as const;
+
+  const inputs = blocks
+    .map(([label, text]) => `### Report ${label}\n${text.trim()}`)
+    .join("\n\n---\n\n");
+
+  return `You merge four independent analyst drafts into **one** polished **Finland Trend Intelligence Brief** (markdown only).
+
+${inputs}
 
 ---
 
-### ANALYST REPORT 1:
-${reports.report1}
+**Do this:**
+1. **Executive summary** — Five bullets: the strongest cross-cutting trends; no fluff.
+2. **De-duplicate** — Same fact in multiple reports → state once; note when 2+ agree (**consensus**).
+3. **Single-source** distinctive points → keep as **emerging** or **unconfirmed** where appropriate.
+4. **Body** — Same seven themes as the inputs: Cities, Culture, Food, Tech, Business, Society, Sports. Use ## headings.
+5. **Signals** — For important themes, tag line-level strength: **Hot** (supported by multiple reports or strong evidence), **Rising**, or **Watch** (thin evidence).
+6. **Voice** — Professional magazine tone; avoid repeating filler across sections.
 
----
-
-### ANALYST REPORT 2:
-${reports.report2}
-
----
-
-### ANALYST REPORT 3:
-${reports.report3}
-
----
-
-### ANALYST REPORT 4:
-${reports.report4}
-
----
-
-## SYNTHESIS RULES:
-
-1. **Eliminate redundancy** — same topic mentioned by multiple analysts = include once, mark as confirmed.
-2. **Highlight consensus** — mentioned by 2+ analysts = HIGH-CONFIDENCE trend.
-3. **Preserve unique insights** — unique finding from 1 analyst = emerging signal.
-4. **Same 7 sections** — Cities, Culture, Food, Tech, Business, Society, Sports.
-5. **Executive Summary** at the top — 5-bullet TL;DR of the absolute hottest trends.
-6. **Trend scores** for every major topic:
-   - 🔥 Hot — confirmed by multiple sources, happening NOW
-   - 📈 Rising — gaining momentum, worth watching
-   - 👀 Watch — early signal, not yet confirmed
-7. Professional, magazine-quality tone — like The Economist meets Wired.
-
-Output in clean markdown format only.
-`.trim();
+Output nothing except the brief.`.trim();
 }
