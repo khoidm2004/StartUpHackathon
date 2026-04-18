@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { ChatGroq } from "@langchain/groq";
+import { HumanMessage } from "@langchain/core/messages";
 import { PromptTemplate } from "@langchain/core/prompts";
 
 dotenv.config({ path: ".env" });
@@ -29,9 +30,10 @@ app.use(
 app.use(express.json());
 
 const groqApiKey = process.env.GROQ_API_KEY;
+const groqModelId = process.env.GROQ_MODEL ?? "llama-3.1-8b-instant";
 
 const model = new ChatGroq({
-  model: "llama-3.1-8b-instant",
+  model: groqModelId,
   apiKey: groqApiKey ?? "",
   temperature: 0.3,
 });
@@ -95,6 +97,38 @@ app.post("/api/summarize", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       error: "Failed to summarize meeting",
+      details: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+/** Smoke test: verifies GROQ_API_KEY, network, and model id via Groq API. */
+app.get("/api/groq-test", async (_req, res) => {
+  try {
+    if (!groqApiKey?.trim()) {
+      return res.status(500).json({
+        ok: false,
+        provider: "groq",
+        error: "GROQ_API_KEY is not configured",
+      });
+    }
+
+    const result = await model.invoke([
+      new HumanMessage("Reply with exactly one word: pong"),
+    ]);
+
+    res.json({
+      ok: true,
+      provider: "groq",
+      model: groqModelId,
+      reply: messageContentToString(result.content),
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      provider: "groq",
+      model: groqModelId,
+      error: "Groq request failed",
       details: error instanceof Error ? error.message : "Unknown error",
     });
   }
