@@ -3,6 +3,7 @@ import cors from "cors";
 import { healthRouter } from "./health.routes";
 import { finlandRouter } from "../features/finland/finland.routes";
 import { contentRouter } from "../features/content/content.routes";
+import { companiesRouter } from "../features/companies/companies.routes";
 
 const allowedOrigins = ["http://localhost:3000", "http://localhost:5174"].filter(
   (o): o is string => Boolean(o),
@@ -29,6 +30,7 @@ export function createApp() {
   app.use(healthRouter);
   app.use("/api", finlandRouter);
   app.use("/api", contentRouter);
+  app.use("/api", companiesRouter);
 
   return app;
 }
