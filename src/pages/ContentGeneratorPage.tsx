@@ -1,8 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const CONTENT_TYPE_KEYS = ["blogPost", "video", "email"] as const;
 type ContentTypeKey = (typeof CONTENT_TYPE_KEYS)[number];
+
+/** All form values suitable for sending to a cloud/API (e.g. generate or save). */
+export type ContentGeneratorCloudPayload = {
+  /** Selected industry key, e.g. `food`, `retail`, `professional`, `health`, or `""` if unset. */
+  industry: string;
+  audience: string;
+  geo: string;
+  outputLanguage: "en" | "fi";
+  contentType: ContentTypeKey;
+  prompt: string;
+};
 
 const SUGGESTION_KEYS = [
   "seasonalPromo",
@@ -18,17 +29,45 @@ export function ContentGeneratorPage() {
   const [generatedContentType, setGeneratedContentType] =
     useState<ContentTypeKey | null>(null);
   const [outLang, setOutLang] = useState<"en" | "fi">("en");
+  /** Output language at last successful generate — preview keys off this, not `outLang`, so changing the form language does not alter the preview. */
+  const [generatedOutLang, setGeneratedOutLang] = useState<"en" | "fi" | null>(
+    null,
+  );
+  const [industry, setIndustry] = useState("");
+  const [audience, setAudience] = useState("");
+  const [geo, setGeo] = useState("");
+  const [prompt, setPrompt] = useState("");
   const [generating, setGenerating] = useState(false);
   const [hasGenerated, setHasGenerated] = useState(false);
 
+  useEffect(() => {
+    setPrompt(t("pages.generator.defaultPrompt"));
+  }, [t]);
+
+  /** Collects current form values for cloud/API requests (generate, save draft, etc.). */
+  const getFormPayload = (): ContentGeneratorCloudPayload => ({
+    industry,
+    audience,
+    geo,
+    outputLanguage: outLang,
+    contentType,
+    prompt,
+  });
+
   const runGenerate = () => {
     const typeAtClick = contentType;
+    const langAtClick = outLang;
+    const payloadForCloud = getFormPayload();
     setGenerating(true);
     window.setTimeout(() => {
       setGenerating(false);
       setGeneratedContentType(typeAtClick);
+      setGeneratedOutLang(langAtClick);
       setHasGenerated(true);
+      void payloadForCloud;
     }, 1400);
+
+    console.log(payloadForCloud);
   };
 
   return (
@@ -63,14 +102,27 @@ export function ContentGeneratorPage() {
               <label className="field__label" htmlFor="industry">
                 {t("pages.generator.industry")}
               </label>
-              <select id="industry" className="select" defaultValue="">
+              <select
+                id="industry"
+                className="select"
+                value={industry}
+                onChange={(e) => setIndustry(e.target.value)}
+              >
                 <option value="" disabled>
                   {t("pages.generator.selectIndustry")}
                 </option>
-                <option>{t("pages.generator.industryFood")}</option>
-                <option>{t("pages.generator.industryRetail")}</option>
-                <option>{t("pages.generator.industryPro")}</option>
-                <option>{t("pages.generator.industryHealth")}</option>
+                <option value="food">
+                  {t("pages.generator.industryFood")}
+                </option>
+                <option value="retail">
+                  {t("pages.generator.industryRetail")}
+                </option>
+                <option value="professional">
+                  {t("pages.generator.industryPro")}
+                </option>
+                <option value="health">
+                  {t("pages.generator.industryHealth")}
+                </option>
               </select>
               <span className="field__hint">
                 {t("pages.generator.industryHint")}{" "}
@@ -91,6 +143,8 @@ export function ContentGeneratorPage() {
               <input
                 id="audience"
                 className="input"
+                value={audience}
+                onChange={(e) => setAudience(e.target.value)}
                 placeholder={t("pages.generator.audiencePh")}
               />
             </div>
@@ -115,6 +169,8 @@ export function ContentGeneratorPage() {
                 <input
                   id="geo"
                   className="input input--with-icon"
+                  value={geo}
+                  onChange={(e) => setGeo(e.target.value)}
                   placeholder={t("pages.generator.geoPh")}
                 />
               </div>
@@ -195,7 +251,8 @@ export function ContentGeneratorPage() {
                 id="prompt"
                 className="textarea"
                 style={{ minHeight: 160 }}
-                defaultValue={t("pages.generator.defaultPrompt")}
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
               />
               <div className="chip-group" style={{ marginTop: 8 }}>
                 {SUGGESTION_KEYS.map((k) => (
@@ -297,32 +354,7 @@ export function ContentGeneratorPage() {
             </div>
           ) : (
             <>
-              <div
-                className="tabs"
-                role="tablist"
-                aria-label={t("common.ariaOutputLanguage")}
-              >
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={outLang === "en"}
-                  className={`tab ${outLang === "en" ? "tab--active" : ""}`}
-                  onClick={() => setOutLang("en")}
-                >
-                  EN
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={outLang === "fi"}
-                  className={`tab ${outLang === "fi" ? "tab--active" : ""}`}
-                  onClick={() => setOutLang("fi")}
-                >
-                  FI
-                </button>
-              </div>
-
-              {outLang === "en" ? (
+              {generatedOutLang === "en" ? (
                 <article
                   style={{ color: "var(--olive-gray)", lineHeight: 1.6 }}
                 >
