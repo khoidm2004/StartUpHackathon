@@ -171,44 +171,30 @@
     },
     "brand": {
       "title": "Brändiprofiili",
-      "subtitle": "Pidä ääni ja visuaalisuus yhtenäisinä jokaisessa kampanjassa.",
-      "brandVoice": "Brändin ääni",
-      "voiceHint": "Ohjaa lauserakennetta ja sanastoa.",
-      "voiceHintTitle": "Kartoita ääni tyyliin, jota tuottaja soveltaa jokaisella kanavalla.",
-      "tone": "Sävy",
-      "keywords": "Avainsanat",
-      "keywordPh": "Lisää avainsana + Enter",
-      "guidelines": "Brändiohjeet",
-      "guidelinesDefault": "Emme väitä terveysvaikutuksista. Suosi muotoa ‘valmistettu Suomessa’. Vältä superlatiiveja ilman lähdettä.",
-      "logo": "Logo",
-      "logoDrop": "Pudota PNG tai SVG tähän (enintään 2 Mt)",
-      "brandAssets": "Brändimateriaalit",
-      "noFiles": "Ei tiedostoja vielä. Lataa kuvia, vanhoja mainoksia tai pakkauksia.",
-      "preview": "Esikatselu",
-      "brandFit": "Brändisopivuus (esimerkki)",
-      "voices": {
-        "friendlyExpert": "Ystävällinen asiantuntija",
-        "boldChallenger": "Rohkea haastaja",
-        "calmMinimalist": "Rauhallinen minimalisti",
-        "warmStoryteller": "Lämmin tarinankertoja"
+      "subtitle": "Yrityksesi—nimi, toimialat sekä kotipaikka ja toiminta-alueet.",
+      "sectionIdentity": "Brändisi",
+      "sectionIdentityLead": "Nämä tiedot ankkuroivat GEO-kohdentamisen ja toimialaherkän tekstin. Voit päivittää niitä milloin tahansa.",
+      "brandName": "Brändi- tai yritysnimi",
+      "brandNamePh": "esim. North Roasters Oy",
+      "industries": "Toimialat",
+      "industriesHint": "Valitse kaikki sopivat tai lisää omia.",
+      "industryPresets": {
+        "food": "Ruoka ja juoma",
+        "retail": "Vähittäiskauppa",
+        "saas": "Ohjelmisto / SaaS",
+        "professionalServices": "Asiantuntijapalvelut",
+        "health": "Terveys ja hyvinvointi",
+        "hospitality": "Matkailu ja ravintola",
+        "manufacturing": "Teollisuus",
+        "creative": "Luovat alat ja media"
       },
-      "tones": {
-        "professional": "Ammattimainen",
-        "playful": "Leikkisä",
-        "inspirational": "Inspiroiva",
-        "direct": "Suora"
-      },
-      "previewTabs": {
-        "social": "Sosiaalinen",
-        "email": "Sähköposti",
-        "blogSnippet": "Blogiotte"
-      },
-      "previewSocialTitle": "Pieni erä. Iso sydän.",
-      "previewSocialBody": "Paahdamme Helsingissä ja toimitamme hiilineutraalisti koko Suomeen—koska ‘paikallinen’ tarkoittaa koko ketjua, ei vain etikettiä.",
-      "previewEmailSubject": "Aihe: Talvikuppisi on valmis",
-      "previewEmailBody": "Hei Alex—tämän viikon paahde korostaa hunajaisia suklaavivahteita kumppanitilaltamme. Tilaa sunnuntaihin mennessä ilmaiseksi toimitettuna Helsingin seudulla.",
-      "previewBlogTitle": "Miksi GEO on tärkeää erikoiskahville",
-      "previewBlogBody": "Turussa ja Tampereella haetaan eri sanoin kuin Helsingissä. Sisällön kohdentaminen oikeille alueille auttaa näkymään oikeaan aikaan—ilman geneerisyyttä."
+      "industryCustomPh": "Lisää toimiala",
+      "headquarters": "Kotipaikka / pääkonttori",
+      "headquartersPh": "esim. Helsinki, Suomi",
+      "headquartersHint": "Rekisteröity tai päätoimipaikka—käytetään ensisijaisena GEO-viitteenä.",
+      "operatingLocations": "Liiketoiminnan toiminta-alueet",
+      "operatingLocationsPh": "esim. Uusimaa, Tampereen seutu; tai yksi kaupunki tai alue riville",
+      "operatingLocationsHint": "Alueet, kaupungit tai maat, joissa myyt tai palvelet—erota pilkuilla tai rivinvaihdoilla."
     },
     "analytics": {
       "title": "Analytiikka ja GEO-näkemykset",

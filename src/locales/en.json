@@ -171,44 +171,30 @@
     },
     "brand": {
       "title": "Brand Profile",
-      "subtitle": "Keep voice and visuals consistent across every campaign.",
-      "brandVoice": "Brand voice",
-      "voiceHint": "Guides sentence structure and vocabulary.",
-      "voiceHintTitle": "We map voice to a style profile the generator applies to every channel.",
-      "tone": "Tone",
-      "keywords": "Keywords",
-      "keywordPh": "Add keyword + Enter",
-      "guidelines": "Brand guidelines",
-      "guidelinesDefault": "We never claim medical benefits. Prefer ‘crafted in Finland’. Avoid superlatives unless sourced.",
-      "logo": "Logo",
-      "logoDrop": "Drop PNG or SVG here (max 2 MB)",
-      "brandAssets": "Brand assets",
-      "noFiles": "No files yet. Upload photos, past ads, or packaging.",
-      "preview": "Preview",
-      "brandFit": "Brand fit (sample)",
-      "voices": {
-        "friendlyExpert": "Friendly expert",
-        "boldChallenger": "Bold challenger",
-        "calmMinimalist": "Calm minimalist",
-        "warmStoryteller": "Warm storyteller"
+      "subtitle": "Your company—name, industries, and where you are based and operate.",
+      "sectionIdentity": "Your brand",
+      "sectionIdentityLead": "This information anchors GEO targeting and industry-aware copy. You can refine it anytime.",
+      "brandName": "Brand or company name",
+      "brandNamePh": "e.g. North Roasters Oy",
+      "industries": "Industries",
+      "industriesHint": "Select all that apply, or add your own.",
+      "industryPresets": {
+        "food": "Food & beverage",
+        "retail": "Retail",
+        "saas": "Software / SaaS",
+        "professionalServices": "Professional services",
+        "health": "Health & wellness",
+        "hospitality": "Hospitality & travel",
+        "manufacturing": "Manufacturing",
+        "creative": "Creative & media"
       },
-      "tones": {
-        "professional": "Professional",
-        "playful": "Playful",
-        "inspirational": "Inspirational",
-        "direct": "Direct"
-      },
-      "previewTabs": {
-        "social": "Social",
-        "email": "Email",
-        "blogSnippet": "Blog snippet"
-      },
-      "previewSocialTitle": "Small batch. Big heart.",
-      "previewSocialBody": "We roast in Helsinki and ship carbon-neutral across Finland—because “local” should mean the whole supply chain, not just the label.",
-      "previewEmailSubject": "Subject: Your winter cup is ready",
-      "previewEmailBody": "Hi Alex—this week’s roast highlights honeyed chocolate notes from our partner farm. Order by Sunday for free delivery in the Helsinki metro.",
-      "previewBlogTitle": "Why GEO matters for specialty coffee",
-      "previewBlogBody": "Searchers in Turku and Tampere use different words than in Helsinki. Mapping your content to real regions helps you show up when it counts—without sounding generic."
+      "industryCustomPh": "Add another industry",
+      "headquarters": "Headquarters location",
+      "headquartersPh": "e.g. Helsinki, Finland",
+      "headquartersHint": "Registered or main office—used as your primary GEO reference.",
+      "operatingLocations": "Business operating locations",
+      "operatingLocationsPh": "e.g. Uusimaa, Tampere region; or one city or region per line",
+      "operatingLocationsHint": "Regions, cities, or countries where you sell or serve customers—separate with commas or new lines."
     },
     "analytics": {
       "title": "Analytics & GEO Insights",

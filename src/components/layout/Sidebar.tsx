@@ -4,9 +4,7 @@ import { useTranslation } from "react-i18next";
 const items = [
   { to: "/dashboard", key: "dashboard", icon: "◆" },
   { to: "/generator", key: "generator", icon: "✎" },
-  { to: "/campaigns", key: "campaigns", icon: "▤" },
   { to: "/brand", key: "brand", icon: "◎" },
-  { to: "/analytics", key: "analytics", icon: "◈" },
   { to: "/multilingual", key: "multilingual", icon: "⇄" },
   { to: "/settings", key: "settings", icon: "⚙" },
 ] as const;
