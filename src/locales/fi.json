@@ -1,0 +1,309 @@
+{
+  "nav": {
+    "dashboard": "Kojelauta",
+    "generator": "Sisällöntuottaja",
+    "campaigns": "Kampanjat",
+    "brand": "Brändiprofiili",
+    "analytics": "Analytiikka",
+    "multilingual": "Monikielisyys",
+    "settings": "Asetukset"
+  },
+  "sidebar": {
+    "title": "GEO Studio",
+    "tag": "Markkinointisisältö",
+    "help": "Ohje",
+    "whatsNew": "Uutta",
+    "primaryNavAria": "Päänavigaatio"
+  },
+  "topbar": {
+    "searchLabel": "Hae kampanjoita, sisältöä, brändejä",
+    "searchPlaceholder": "Hae kampanjoita, sisältöä, brändejä…",
+    "searchTitle": "Hae kampanjoita ja sisältöä",
+    "notifications": "Ilmoitukset",
+    "userMenu": "Käyttäjävalikko",
+    "interfaceLangAria": "Käyttöliittymän kieli"
+  },
+  "common": {
+    "tip": "Vinkki:",
+    "close": "Sulje",
+    "back": "Takaisin",
+    "next": "Seuraava",
+    "skipTour": "Ohita esittely",
+    "stepOf": "Vaihe {{current}} / {{total}}",
+    "skipTourAria": "Ohita esittely",
+    "vsLast30": "vs. edelliset 30 päivää",
+    "chars": "{{n}} merkkiä",
+    "updatedJustNow": "Päivitetty juuri nyt",
+    "add": "Lisää",
+    "edit": "Muokkaa",
+    "regenerate": "Luo uudelleen",
+    "copy": "Kopioi",
+    "discard": "Hylkää",
+    "saveChanges": "Tallenna muutokset",
+    "generating": "Luodaan…",
+    "removeKeyword": "Poista {{keyword}}",
+    "ariaTone": "Sävy",
+    "ariaContentType": "Sisällön tyyppi",
+    "ariaViewMode": "Näkymä",
+    "ariaOutputLanguage": "Tuloksen kieli",
+    "ariaActions": "Toiminnot",
+    "exampleDataLayout": "Esimerkkidata asettelua varten",
+    "exampleDataLang": "EN vs FI — esimerkkidata",
+    "sampleOnly": "Vain esikatselu",
+    "performancePreview": "Suorituskyvyn esikatselu",
+    "table": "Taulukko",
+    "cards": "Kortit",
+    "updated": "Päivitetty {{date}}"
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Kojelauta",
+      "subtitle": "Keskuksesi GEO-optimoidulle sisällölle—aloita uudesta luonnoksesta tai jatka siitä mihin jäit.",
+      "newContent": "Uusi sisältö",
+      "engagement": "Sitoutuminen",
+      "reach": "Tavoite",
+      "conversion": "Konversio",
+      "continueFlow": "Jatka työnkulkua",
+      "continueDesc": "Syöte → Luo → Muokkaa → Julkaise. Avaa tuottaja seurataksesi ohjattuja vaiheita.",
+      "openGenerator": "Avaa sisällöntuottaja",
+      "reviewBrand": "Tarkista brändiprofiili",
+      "trendingTitle": "Kuumat trendiaiheet",
+      "trendingOverline": "Aihe-avainsanat",
+      "trendingSubtitle": "Mitä haetaan ja mistä puhutaan—kaupungeittain.",
+      "trendingFootnote": "Suhteellinen kiinnostus alueen keskiarvoon verrattuna (esimerkkisignaaleja, päivitetään viikoittain).",
+      "trendingChartAria": "Trendaavat aihe-avainsanat: {{city}}",
+      "topics": {
+        "helsinki": {
+          "localDining": "Lähiruoka & uudet avaukset",
+          "designWeek": "Design- & kulttuuriviikko",
+          "innerCity": "Keskustan palvelut",
+          "sustainableRetail": "Kestävä vähittäiskauppa",
+          "waterfront": "Ranta & tapahtumat"
+        },
+        "tampere": {
+          "saunaCulture": "Sauna & hyvinvointi",
+          "studentLife": "Opiskelijaelämä & tapahtumat",
+          "lakeNature": "Järvipolut & luonto",
+          "tamperePride": "“Tamperelainen” paikallisylpeys",
+          "industrialHeritage": "Teollisuusperintökierrokset"
+        }
+      }
+    },
+    "generator": {
+      "title": "Sisällöntuottaja",
+      "subtitle": "Luo GEO-optimoitua, brändin mukaista tekstiä englanniksi ja suomeksi.",
+      "stepInput": "Syöte",
+      "stepGenerate": "Luo",
+      "stepEdit": "Muokkaa",
+      "stepPublish": "Julkaise",
+      "whatCreate": "Mitä luodaan?",
+      "industry": "Toimiala / liiketoiminta",
+      "selectIndustry": "Valitse toimiala…",
+      "industryFood": "Ruoka ja juoma",
+      "industryRetail": "Vähittäiskauppa ja verkkokauppa",
+      "industryPro": "Asiantuntijapalvelut",
+      "industryHealth": "Terveys ja hyvinvointi",
+      "industryHint": "Valitse lähin vastine—tämä ohjaa sävyä ja GEO-viittauksia.",
+      "industryHintTitle": "Tekoäly käyttää toimialaa idiomeihin, sääntöjen mukaiseen sävyyn ja kilpailijoihin.",
+      "audience": "Kohderyhmä",
+      "audiencePh": "esim. kestävyydestä kiinnostuneet vanhemmat, 28–45, kaupunki",
+      "geo": "Sijainti (GEO-optimointi)",
+      "geoPh": "esim. Helsingin seutu + Turku",
+      "geoHint": "Kaupunki, alue tai maa paikallista hakua varten.",
+      "language": "Kieli",
+      "english": "Englanti",
+      "finnish": "Suomi",
+      "outputHint": "Tulosten välilehdet vastaavat valintaasi.",
+      "contentType": "Sisällön tyyppi",
+      "aiPrompt": "Tekoälykehotus",
+      "suggestions": "Ehdotukset",
+      "defaultPrompt": "Kirjoita ystävällinen Instagram-kuvateksti talvisekoituksellemme, korosta eettistä hankintaa ja ilmaista toimitusta Helsingin seudulla tällä viikolla.",
+      "generateContent": "Luo sisältö",
+      "generatedContent": "Luotu sisältö",
+      "imagePlaceholder": "Kuvapaikkamerkki — lisää luova editorissa",
+      "videoPlaceholder": "▶ Video-/tarinakäsikirjoituksen paikkamerkki",
+      "bottomTip": "Säädä sijaintia tai kohderyhmää, sitten Luo uudelleen tarkempaa GEO-ilmaisua varten.",
+      "contentTypes": {
+        "ads": "Mainokset",
+        "blogPost": "Blogikirjoitus",
+        "socialMedia": "Sosiaalinen media",
+        "email": "Sähköposti"
+      },
+      "suggestionChips": {
+        "seasonalPromo": "Kausitarjous",
+        "founderStory": "Perustajatarina",
+        "productLaunch": "Tuotelanseeraus",
+        "localEvent": "Paikallistapahtuma"
+      },
+      "sample": {
+        "enTitle": "Winter warmth, shipped from Helsinki",
+        "enP1": "This week, our winter blend celebrates small farms and big flavor—roasted here, delivered to your door across the capital region with free shipping.",
+        "enP2": "Tap “ethical sourcing” in Stories to see the journey. ☕ #HelsinkiCoffee #WinterBlend",
+        "fiTitle": "Talven lämpöä suoraan Helsingistä",
+        "fiP1": "Tämän viikon talvisekoitus yhdistää pienet tilat ja isot maut—paahdettu täällä, toimitettuna kotiin pääkaupunkiseudulla ilman toimituskuluja.",
+        "fiP2": "Katso tarina Storiesissa. ☕ #HelsinkiKahvi #Talvisekoitus"
+      }
+    },
+    "campaigns": {
+      "title": "Kampanjat",
+      "subtitle": "Seuraa luonnoksia, aikatauluja ja tuloksia yhdellä silmäyksellä.",
+      "newCampaign": "Uusi kampanja",
+      "campaignCol": "Kampanja",
+      "contentTypeCol": "Sisällön tyyppi",
+      "statusCol": "Tila",
+      "lastUpdatedCol": "Viimeksi päivitetty",
+      "types": {
+        "social": "Sosiaalinen",
+        "email": "Sähköposti",
+        "blogPost": "Blogikirjoitus"
+      },
+      "status": {
+        "draft": "Luonnos",
+        "published": "Julkaistu",
+        "scheduled": "Ajastettu"
+      },
+      "rows": {
+        "springLaunch": {
+          "name": "Kevään lanseeraus — Helsinki"
+        },
+        "newsletter": {
+          "name": "Uutiskirje — Eettinen hankinta"
+        },
+        "blogGeo": {
+          "name": "Blogi — GEO-opas"
+        }
+      }
+    },
+    "brand": {
+      "title": "Brändiprofiili",
+      "subtitle": "Pidä ääni ja visuaalisuus yhtenäisinä jokaisessa kampanjassa.",
+      "brandVoice": "Brändin ääni",
+      "voiceHint": "Ohjaa lauserakennetta ja sanastoa.",
+      "voiceHintTitle": "Kartoita ääni tyyliin, jota tuottaja soveltaa jokaisella kanavalla.",
+      "tone": "Sävy",
+      "keywords": "Avainsanat",
+      "keywordPh": "Lisää avainsana + Enter",
+      "guidelines": "Brändiohjeet",
+      "guidelinesDefault": "Emme väitä terveysvaikutuksista. Suosi muotoa ‘valmistettu Suomessa’. Vältä superlatiiveja ilman lähdettä.",
+      "logo": "Logo",
+      "logoDrop": "Pudota PNG tai SVG tähän (enintään 2 Mt)",
+      "brandAssets": "Brändimateriaalit",
+      "noFiles": "Ei tiedostoja vielä. Lataa kuvia, vanhoja mainoksia tai pakkauksia.",
+      "preview": "Esikatselu",
+      "brandFit": "Brändisopivuus (esimerkki)",
+      "voices": {
+        "friendlyExpert": "Ystävällinen asiantuntija",
+        "boldChallenger": "Rohkea haastaja",
+        "calmMinimalist": "Rauhallinen minimalisti",
+        "warmStoryteller": "Lämmin tarinankertoja"
+      },
+      "tones": {
+        "professional": "Ammattimainen",
+        "playful": "Leikkisä",
+        "inspirational": "Inspiroiva",
+        "direct": "Suora"
+      },
+      "previewTabs": {
+        "social": "Sosiaalinen",
+        "email": "Sähköposti",
+        "blogSnippet": "Blogiotte"
+      },
+      "previewSocialTitle": "Pieni erä. Iso sydän.",
+      "previewSocialBody": "Paahdamme Helsingissä ja toimitamme hiilineutraalisti koko Suomeen—koska ‘paikallinen’ tarkoittaa koko ketjua, ei vain etikettiä.",
+      "previewEmailSubject": "Aihe: Talvikuppisi on valmis",
+      "previewEmailBody": "Hei Alex—tämän viikon paahde korostaa hunajaisia suklaavivahteita kumppanitilaltamme. Tilaa sunnuntaihin mennessä ilmaiseksi toimitettuna Helsingin seudulla.",
+      "previewBlogTitle": "Miksi GEO on tärkeää erikoiskahville",
+      "previewBlogBody": "Turussa ja Tampereella haetaan eri sanoin kuin Helsingissä. Sisällön kohdentaminen oikeille alueille auttaa näkymään oikeaan aikaan—ilman geneerisyyttä."
+    },
+    "analytics": {
+      "title": "Analytiikka ja GEO-näkemykset",
+      "subtitle": "Näe missä sisältö resonoi ja miten kielet vertautuvat.",
+      "dateRange": "Aikaväli",
+      "last7": "Viimeiset 7 päivää",
+      "last30": "Viimeiset 30 päivää",
+      "last90": "Viimeiset 90 päivää",
+      "custom": "Mukautettu väli",
+      "engagementByRegion": "Sitoutuminen alueittain",
+      "performanceByLang": "Suorituskyky kielittäin",
+      "seoScore": "SEO / GEO -pisteet",
+      "keywordSuggestions": "Avainsanaehdotukset",
+      "optimizationTips": "Optimointivinkit",
+      "regions": {
+        "uusimaa": "Uusimaa",
+        "pirkanmaa": "Pirkanmaa",
+        "southwest": "Varsinais-Suomi",
+        "northOstrobothnia": "Pohjois-Pohjanmaa"
+      },
+      "scoreBullets": {
+        "localKeywords": "Paikalliset avainsanat",
+        "locationMentions": "Sijaintiviittaukset",
+        "readability": "Luettavuus"
+      },
+      "kw1": "Helsinki erikoiskahvi",
+      "kw2": "eettiset pavut",
+      "kw3": "tilaus Suomi",
+      "tip1Title": "Aloita paikasta.",
+      "tip1Body": "Mainitse naapurusto ensimmäisessä lauseessa vahvempaa GEO-relevanssia varten.",
+      "tip2Title": "Peilaa hakusanoja.",
+      "tip2Body": "Käytä ‘tilaa’ / ‘order’ kuten paikalliset hakevat FI:ssä.",
+      "tip3Title": "Parita kielet.",
+      "tip3Body": "Pidä EN/FI-kehyskehotukset linjassa—sama tarjous, luontevat idiomit."
+    },
+    "multilingual": {
+      "title": "Monikielinen editori",
+      "subtitle": "Työskentele englanniksi ja suomeksi rinnakkain.",
+      "syncEdits": "Synkronoi muokkaukset",
+      "syncHintTitle": "Kun päällä, rakenteelliset muutokset heijastuvat kielten välillä. Tarkista aina natiivi ilmaisu.",
+      "syncNote": "Muokkaukset voivat silti vaatia kielentarkistusta.",
+      "compare": "Vertaa eroja",
+      "enLabel": "🇬🇧 Englanti",
+      "fiLabel": "🇫🇮 Suomi",
+      "modalTitle": "Vertaa eroja",
+      "added": "Lisätty",
+      "removed": "Poistettu",
+      "compareSample1": "Winter warmth, shipped from Helsinki → Talven lämpöä suoraan Helsingistä",
+      "compareSample2": "“ethical sourcing” → “eettinen hankinta” (harkitse “eettinen alkuperä” sosiaaliseen sävyyn)",
+      "enSample": "Winter warmth, shipped from Helsinki\n\nThis week, our winter blend celebrates small farms and big flavor—roasted here, delivered to your door across the capital region with free shipping.\n\nTap “ethical sourcing” in Stories to see the journey. ☕ #HelsinkiCoffee #WinterBlend",
+      "fiSample": "Talven lämpöä suoraan Helsingistä\n\nTämän viikon talvisekoitus yhdistää pienet tilat ja isot maut—paahdettu täällä, toimitettuna kotiin pääkaupunkiseudulla ilman toimituskuluja.\n\nKatso tarina Storiesissa. ☕ #HelsinkiKahvi #Talvisekoitus"
+    },
+    "settings": {
+      "title": "Asetukset",
+      "subtitle": "Työtilan asetukset, ilmoitukset ja saavutettavuus.",
+      "notifications": "Ilmoitukset",
+      "emailPublished": "Sähköposti kun kampanja julkaistaan",
+      "weeklySummary": "Viikoittainen analytiikkayhteenveto",
+      "accessibility": "Saavutettavuus",
+      "textSize": "Tekstin koko",
+      "font100": "100 % (oletus)",
+      "font110": "110 %",
+      "font125": "125 %",
+      "fontHint": "Suurentaa perus-UI-tekstiä; oletusteeman kontrasti täyttää WCAG-vaatimukset."
+    }
+  },
+  "onboarding": {
+    "welcomeTitle": "Tervetuloa",
+    "welcomeBody": "GEO Studio auttaa luomaan monikielistä, brändin mukaista markkinointisisältöä paikallishakuun—ilman jargonia.",
+    "brandTitle": "Brändin perusteet",
+    "brandBody": "Kerro toimiala ja sävy kerran—pidämme äänen yhtenäisenä kaikkialla.",
+    "industry": "Toimiala",
+    "selectPlaceholder": "Valitse…",
+    "industryFood": "Ruoka ja juoma",
+    "industryRetail": "Vähittäiskauppa",
+    "industryPro": "Asiantuntijapalvelut",
+    "tone": "Sävy",
+    "toneFriendly": "Ystävällinen",
+    "toneBold": "Rohkea",
+    "toneCalm": "Rauhallinen",
+    "keywordLabel": "Avainsana joka kuuluu sinulle",
+    "keywordPh": "esim. artisan, paikallinen, hiilineutraali",
+    "geoTitle": "GEO-oletukset",
+    "geoBody": "Aseta missä kilpailet ja millä kielillä julkaiset.",
+    "primaryLocation": "Ensisijainen sijainti",
+    "locationPh": "esim. Helsingin seutu, Suomi",
+    "languages": "Kielet",
+    "doneTitle": "Valmista",
+    "doneBody": "Avaa Sisällöntuottaja vasemmalta aloittaaksesi kehotuksilla, GEO-kentillä ja kaksikielisillä välilehdillä.",
+    "doneTip": "Etsi pieniä “?”-vihjeitä tärkeiden kenttien vieressä—ne kertovat mitä tekoäly käyttää.",
+    "startCreating": "Aloita luominen"
+  }
+}

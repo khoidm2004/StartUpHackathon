@@ -1,0 +1,309 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "generator": "Content Generator",
+    "campaigns": "Campaigns",
+    "brand": "Brand Profile",
+    "analytics": "Analytics",
+    "multilingual": "Multilingual",
+    "settings": "Settings"
+  },
+  "sidebar": {
+    "title": "GEO Studio",
+    "tag": "Marketing content",
+    "help": "Help",
+    "whatsNew": "What’s new",
+    "primaryNavAria": "Primary"
+  },
+  "topbar": {
+    "searchLabel": "Search campaigns, content, brands",
+    "searchPlaceholder": "Search campaigns, content, brands…",
+    "searchTitle": "Search campaigns and content",
+    "notifications": "Notifications",
+    "userMenu": "User menu",
+    "interfaceLangAria": "Interface language"
+  },
+  "common": {
+    "tip": "Tip:",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "skipTour": "Skip tour",
+    "stepOf": "Step {{current}} of {{total}}",
+    "skipTourAria": "Skip tour",
+    "vsLast30": "vs last 30 days",
+    "chars": "{{n}} chars",
+    "updatedJustNow": "Updated just now",
+    "add": "Add",
+    "edit": "Edit",
+    "regenerate": "Regenerate",
+    "copy": "Copy",
+    "discard": "Discard",
+    "saveChanges": "Save changes",
+    "generating": "Generating…",
+    "removeKeyword": "Remove {{keyword}}",
+    "ariaTone": "Tone",
+    "ariaContentType": "Content type",
+    "ariaViewMode": "View mode",
+    "ariaOutputLanguage": "Output language",
+    "ariaActions": "Actions",
+    "exampleDataLayout": "Example data for layout",
+    "exampleDataLang": "EN vs FI — example data",
+    "sampleOnly": "Sample only",
+    "performancePreview": "Performance preview",
+    "table": "Table",
+    "cards": "Cards",
+    "updated": "Updated {{date}}"
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Your hub for GEO-optimized content—start with a new draft or pick up where you left off.",
+      "newContent": "New content",
+      "engagement": "Engagement",
+      "reach": "Reach",
+      "conversion": "Conversion",
+      "continueFlow": "Continue your flow",
+      "continueDesc": "Input → Generate → Edit → Publish. Open the generator to follow the guided steps.",
+      "openGenerator": "Open Content Generator",
+      "reviewBrand": "Review brand profile",
+      "trendingTitle": "Hot trend topics",
+      "trendingOverline": "Topic keywords",
+      "trendingSubtitle": "What people are searching and talking about—by city.",
+      "trendingFootnote": "Relative interest vs. regional baseline (example signals, updated weekly).",
+      "trendingChartAria": "Trending topic keywords for {{city}}",
+      "topics": {
+        "helsinki": {
+          "localDining": "Local dining & openings",
+          "designWeek": "Design & culture week",
+          "innerCity": "Inner-city services",
+          "sustainableRetail": "Sustainable retail",
+          "waterfront": "Waterfront & events"
+        },
+        "tampere": {
+          "saunaCulture": "Sauna & wellness",
+          "studentLife": "Student life & events",
+          "lakeNature": "Lake trails & nature",
+          "tamperePride": "“Tampere” local pride",
+          "industrialHeritage": "Industrial heritage tours"
+        }
+      }
+    },
+    "generator": {
+      "title": "Content Generator",
+      "subtitle": "Create GEO-optimized, on-brand copy in English and Finnish.",
+      "stepInput": "Input",
+      "stepGenerate": "Generate",
+      "stepEdit": "Edit",
+      "stepPublish": "Publish",
+      "whatCreate": "What should we create?",
+      "industry": "Business type / industry",
+      "selectIndustry": "Select industry…",
+      "industryFood": "Food & beverage",
+      "industryRetail": "Retail & e-commerce",
+      "industryPro": "Professional services",
+      "industryHealth": "Health & wellness",
+      "industryHint": "Pick the closest match—this steers tone and GEO references.",
+      "industryHintTitle": "AI uses industry to choose idioms, compliance tone, and local competitors to avoid.",
+      "audience": "Target audience",
+      "audiencePh": "e.g. Sustainability-minded parents, 28–45, urban",
+      "geo": "Location (GEO optimization)",
+      "geoPh": "e.g. Helsinki metro + Turku",
+      "geoHint": "City, region, or country for local SEO.",
+      "language": "Language",
+      "english": "English",
+      "finnish": "Finnish",
+      "outputHint": "Output tabs will match your selection.",
+      "contentType": "Content type",
+      "aiPrompt": "AI prompt",
+      "suggestions": "Suggestions",
+      "defaultPrompt": "Write a friendly Instagram caption for our winter blend, highlighting ethical sourcing and free shipping in the Helsinki area this week.",
+      "generateContent": "Generate Content",
+      "generatedContent": "Generated content",
+      "imagePlaceholder": "Image placeholder — add creative in editor",
+      "videoPlaceholder": "▶ Video script / storyboard placeholder",
+      "bottomTip": "Tweak location or audience, then Regenerate for sharper GEO phrasing.",
+      "contentTypes": {
+        "ads": "Ads",
+        "blogPost": "Blog post",
+        "socialMedia": "Social media",
+        "email": "Email"
+      },
+      "suggestionChips": {
+        "seasonalPromo": "Seasonal promo",
+        "founderStory": "Founder story",
+        "productLaunch": "Product launch",
+        "localEvent": "Local event"
+      },
+      "sample": {
+        "enTitle": "Winter warmth, shipped from Helsinki",
+        "enP1": "This week, our winter blend celebrates small farms and big flavor—roasted here, delivered to your door across the capital region with free shipping.",
+        "enP2": "Tap “ethical sourcing” in Stories to see the journey. ☕ #HelsinkiCoffee #WinterBlend",
+        "fiTitle": "Talven lämpöä suoraan Helsingistä",
+        "fiP1": "Tämän viikon talvisekoitus yhdistää pienet tilat ja isot maut—paahdettu täällä, toimitettuna kotiin pääkaupunkiseudulla ilman toimituskuluja.",
+        "fiP2": "Katso tarina Storiesissa. ☕ #HelsinkiKahvi #Talvisekoitus"
+      }
+    },
+    "campaigns": {
+      "title": "Campaigns",
+      "subtitle": "Track drafts, schedules, and performance at a glance.",
+      "newCampaign": "New campaign",
+      "campaignCol": "Campaign",
+      "contentTypeCol": "Content type",
+      "statusCol": "Status",
+      "lastUpdatedCol": "Last updated",
+      "types": {
+        "social": "Social",
+        "email": "Email",
+        "blogPost": "Blog post"
+      },
+      "status": {
+        "draft": "Draft",
+        "published": "Published",
+        "scheduled": "Scheduled"
+      },
+      "rows": {
+        "springLaunch": {
+          "name": "Spring Launch — Helsinki"
+        },
+        "newsletter": {
+          "name": "Newsletter — Ethical sourcing"
+        },
+        "blogGeo": {
+          "name": "Blog — GEO playbook"
+        }
+      }
+    },
+    "brand": {
+      "title": "Brand Profile",
+      "subtitle": "Keep voice and visuals consistent across every campaign.",
+      "brandVoice": "Brand voice",
+      "voiceHint": "Guides sentence structure and vocabulary.",
+      "voiceHintTitle": "We map voice to a style profile the generator applies to every channel.",
+      "tone": "Tone",
+      "keywords": "Keywords",
+      "keywordPh": "Add keyword + Enter",
+      "guidelines": "Brand guidelines",
+      "guidelinesDefault": "We never claim medical benefits. Prefer ‘crafted in Finland’. Avoid superlatives unless sourced.",
+      "logo": "Logo",
+      "logoDrop": "Drop PNG or SVG here (max 2 MB)",
+      "brandAssets": "Brand assets",
+      "noFiles": "No files yet. Upload photos, past ads, or packaging.",
+      "preview": "Preview",
+      "brandFit": "Brand fit (sample)",
+      "voices": {
+        "friendlyExpert": "Friendly expert",
+        "boldChallenger": "Bold challenger",
+        "calmMinimalist": "Calm minimalist",
+        "warmStoryteller": "Warm storyteller"
+      },
+      "tones": {
+        "professional": "Professional",
+        "playful": "Playful",
+        "inspirational": "Inspirational",
+        "direct": "Direct"
+      },
+      "previewTabs": {
+        "social": "Social",
+        "email": "Email",
+        "blogSnippet": "Blog snippet"
+      },
+      "previewSocialTitle": "Small batch. Big heart.",
+      "previewSocialBody": "We roast in Helsinki and ship carbon-neutral across Finland—because “local” should mean the whole supply chain, not just the label.",
+      "previewEmailSubject": "Subject: Your winter cup is ready",
+      "previewEmailBody": "Hi Alex—this week’s roast highlights honeyed chocolate notes from our partner farm. Order by Sunday for free delivery in the Helsinki metro.",
+      "previewBlogTitle": "Why GEO matters for specialty coffee",
+      "previewBlogBody": "Searchers in Turku and Tampere use different words than in Helsinki. Mapping your content to real regions helps you show up when it counts—without sounding generic."
+    },
+    "analytics": {
+      "title": "Analytics & GEO Insights",
+      "subtitle": "See where content resonates and how languages compare.",
+      "dateRange": "Date range",
+      "last7": "Last 7 days",
+      "last30": "Last 30 days",
+      "last90": "Last 90 days",
+      "custom": "Custom range",
+      "engagementByRegion": "Engagement by region",
+      "performanceByLang": "Performance by language",
+      "seoScore": "SEO / GEO score",
+      "keywordSuggestions": "Keyword suggestions",
+      "optimizationTips": "Optimization tips",
+      "regions": {
+        "uusimaa": "Uusimaa",
+        "pirkanmaa": "Pirkanmaa",
+        "southwest": "Southwest Finland",
+        "northOstrobothnia": "North Ostrobothnia"
+      },
+      "scoreBullets": {
+        "localKeywords": "Local keywords",
+        "locationMentions": "Location mentions",
+        "readability": "Readability"
+      },
+      "kw1": "Helsinki specialty coffee",
+      "kw2": "ethical beans",
+      "kw3": "subscription Finland",
+      "tip1Title": "Open with place.",
+      "tip1Body": "Mention a neighborhood in the first sentence for stronger GEO relevance.",
+      "tip2Title": "Mirror search verbs.",
+      "tip2Body": "Use “tilaa” / “order” the way locals search in FI.",
+      "tip3Title": "Pair languages.",
+      "tip3Body": "Keep EN/FI CTAs aligned—same offer, native idioms."
+    },
+    "multilingual": {
+      "title": "Multilingual editor",
+      "subtitle": "Work in English and Finnish side by side.",
+      "syncEdits": "Sync edits",
+      "syncHintTitle": "When on, structural changes mirror across languages. Always review native phrasing.",
+      "syncNote": "Edits may still need native review.",
+      "compare": "Compare differences",
+      "enLabel": "🇬🇧 English",
+      "fiLabel": "🇫🇮 Finnish",
+      "modalTitle": "Compare differences",
+      "added": "Added",
+      "removed": "Removed",
+      "compareSample1": "Winter warmth, shipped from Helsinki → Talven lämpöä suoraan Helsingistä",
+      "compareSample2": "“ethical sourcing” → “eettinen hankinta” (consider “eettinen alkuperä” for social tone)",
+      "enSample": "Winter warmth, shipped from Helsinki\n\nThis week, our winter blend celebrates small farms and big flavor—roasted here, delivered to your door across the capital region with free shipping.\n\nTap “ethical sourcing” in Stories to see the journey. ☕ #HelsinkiCoffee #WinterBlend",
+      "fiSample": "Talven lämpöä suoraan Helsingistä\n\nTämän viikon talvisekoitus yhdistää pienet tilat ja isot maut—paahdettu täällä, toimitettuna kotiin pääkaupunkiseudulla ilman toimituskuluja.\n\nKatso tarina Storiesissa. ☕ #HelsinkiKahvi #Talvisekoitus"
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Workspace preferences, notifications, and accessibility.",
+      "notifications": "Notifications",
+      "emailPublished": "Email when a campaign is published",
+      "weeklySummary": "Weekly analytics summary",
+      "accessibility": "Accessibility",
+      "textSize": "Text size",
+      "font100": "100% (default)",
+      "font110": "110%",
+      "font125": "125%",
+      "fontHint": "Increases base UI text; contrast meets WCAG on default theme."
+    }
+  },
+  "onboarding": {
+    "welcomeTitle": "Welcome",
+    "welcomeBody": "GEO Studio helps you create multilingual, brand-aligned marketing content tuned for local search—without jargon.",
+    "brandTitle": "Brand basics",
+    "brandBody": "Tell us your industry and tone once—we’ll keep voice consistent everywhere.",
+    "industry": "Industry",
+    "selectPlaceholder": "Select…",
+    "industryFood": "Food & beverage",
+    "industryRetail": "Retail",
+    "industryPro": "Professional services",
+    "tone": "Tone",
+    "toneFriendly": "Friendly",
+    "toneBold": "Bold",
+    "toneCalm": "Calm",
+    "keywordLabel": "A keyword you own",
+    "keywordPh": "e.g. artisan, local, carbon-neutral",
+    "geoTitle": "GEO defaults",
+    "geoBody": "Set where you compete and which languages you publish in.",
+    "primaryLocation": "Primary location",
+    "locationPh": "e.g. Helsinki metro, Finland",
+    "languages": "Languages",
+    "doneTitle": "You’re set",
+    "doneBody": "Open Content Generator from the left to start with prompts, GEO fields, and bilingual tabs.",
+    "doneTip": "Look for the small “?” hints next to important fields— they explain what the AI uses.",
+    "startCreating": "Start creating"
+  }
+}
