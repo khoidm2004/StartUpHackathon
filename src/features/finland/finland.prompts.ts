@@ -1,8 +1,5 @@
 import { PromptTemplate } from "@langchain/core/prompts";
 
-// ============================================================
-//  TYPES
-// ============================================================
 export interface AnalysisResults {
   report1: string;
   report2: string;
@@ -10,9 +7,6 @@ export interface AnalysisResults {
   report4: string;
 }
 
-// ============================================================
-//  ANALYSIS PROMPT — PromptTemplate, sent to all 4 models
-// ============================================================
 export const analysisPrompt = PromptTemplate.fromTemplate(`
 You are a Finland trend intelligence analyst. Provide a comprehensive and highly detailed
 report on the HOTTEST current trends, topics, and happenings in Finland right now.
@@ -67,10 +61,6 @@ Give concrete examples for every section — do NOT be vague.
 Context: {context}
 `);
 
-// ============================================================
-//  SYNTHESIS PROMPT — plain string builder (avoids LangChain
-//  PromptTemplate type inference issues with dynamic variables)
-// ============================================================
 export function buildSynthesisPrompt(reports: AnalysisResults): string {
   return `
 You are a senior editorial analyst specializing in Finland. You have received four separate

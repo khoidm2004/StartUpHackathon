@@ -1,26 +1,13 @@
 import { ChatGroq } from "@langchain/groq";
 import { HumanMessage } from "@langchain/core/messages";
 import dotenv from "dotenv";
-import { MODELS, SYNTHESIS_MODEL, GROQ_CONFIG, ModelConfig } from "../config/groqConfig";
-import { analysisPrompt, buildSynthesisPrompt, AnalysisResults } from "../utils/prompts";
-import { logger } from "../utils/logger";
+import { MODELS, SYNTHESIS_MODEL, GROQ_CONFIG, ModelConfig } from "../../config/groqConfig";
+import { analysisPrompt, buildSynthesisPrompt, AnalysisResults } from "./finland.prompts";
+import { messageContentToString } from "../../lib/groq/messageContent";
+import { logger } from "../../lib/logger";
 
 dotenv.config();
 
-// ============================================================
-//  HELPER — convert LangChain message content to string
-// ============================================================
-function contentToString(content: unknown): string {
-  if (typeof content === "string") return content;
-  if (Array.isArray(content)) {
-    return content.map((c) => (typeof c === "string" ? c : JSON.stringify(c))).join("");
-  }
-  return String(content);
-}
-
-// ============================================================
-//  QUERY SINGLE MODEL — analysis prompt via chain
-// ============================================================
 async function queryModel(modelId: string, label: string): Promise<string> {
   logger.info(`Querying ${label}...`);
 
@@ -34,19 +21,16 @@ async function queryModel(modelId: string, label: string): Promise<string> {
   const chain = analysisPrompt.pipe(groq);
   const result = await chain.invoke({ context: "Finland, current trends, 2025" });
 
-  const output = contentToString(result.content);
+  const output = messageContentToString(result.content);
   logger.success(`${label} done (${output.length} chars)`);
   return output.trim();
 }
 
-// ============================================================
-//  RUN 4 MODELS IN PARALLEL — same prompt
-// ============================================================
 export async function runParallelAnalysis(): Promise<AnalysisResults> {
   logger.divider("🚀 Running 4 Groq models in parallel...");
 
   const results = await Promise.allSettled(
-    MODELS.map((m: ModelConfig) => queryModel(m.model, m.name))
+    MODELS.map((m: ModelConfig) => queryModel(m.model, m.name)),
   );
 
   const outputs: Partial<AnalysisResults> = {};
@@ -65,10 +49,6 @@ export async function runParallelAnalysis(): Promise<AnalysisResults> {
   return outputs as AnalysisResults;
 }
 
-// ============================================================
-//  RUN SYNTHESIS — build prompt as plain string, invoke directly
-//  (avoids PromptTemplate type inference issues with LangChain)
-// ============================================================
 export async function runSynthesis(reports: AnalysisResults): Promise<string> {
   logger.divider("🧠 Running synthesis model...");
 
@@ -79,11 +59,26 @@ export async function runSynthesis(reports: AnalysisResults): Promise<string> {
     maxTokens: 4096,
   });
 
-  // Build prompt as plain string — no PromptTemplate needed
   const prompt = buildSynthesisPrompt(reports);
   const result = await groq.invoke([new HumanMessage(prompt)]);
 
-  const output = contentToString(result.content);
+  const output = messageContentToString(result.content);
   logger.success(`Synthesis done (${output.length} chars)`);
   return output.trim();
+}
+
+export async function runFinlandPipeline(): Promise<{
+  duration_seconds: number;
+  analysis: AnalysisResults;
+  summary: string;
+}> {
+  const startTime = Date.now();
+
+  const analysis = await runParallelAnalysis();
+  const summary = await runSynthesis(analysis);
+
+  const duration_seconds = parseFloat(((Date.now() - startTime) / 1000).toFixed(1));
+  logger.success(`Pipeline complete in ${duration_seconds}s`);
+
+  return { duration_seconds, analysis, summary };
 }
