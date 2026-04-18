@@ -38,35 +38,23 @@ const model = new ChatGroq({
   temperature: 0.3,
 });
 
-const prompt = PromptTemplate.fromTemplate(`
-You are a professional meeting summarizer with validation capabilities.
+const contentGeneratedPrompt = PromptTemplate.fromTemplate(`
+You are an expert content creator.
 
-FIRST, analyze if the provided text is actually meeting minutes or meeting-related content.
+Using the user preferences and hot topics summary below, create a compelling piece of content.
 
-Meeting minutes typically contain:
-- Discussion of topics or agenda items
-- Decisions made or conclusions reached
-- Action items or tasks assigned
-- Participant information or attendees
-- Date/time information
-- Topics discussed in a professional context
+--- USER PREFERENCES ---
+{user_preferences}
 
-If the text is NOT meeting minutes (e.g., random text, stories, code, personal messages, advertisements, etc.), respond EXACTLY with this format:
-The provided text does not appear to be meeting minutes. Please provide actual meeting minutes containing discussions, decisions, or action items.
+--- HOT TOPICS SUMMARY ---
+{hot_topics_summary}
 
-If the text IS valid meeting minutes, provide a structured summary in the following format:
-
-1. DATE & ATTENDEES: List the date and attendees
-2. BRIEF SUMMARY: A short overview of the meeting
-3. KEY DECISIONS: List the main decisions made
-4. ACTION ITEMS: List all action items with owners and deadlines
-5. IMPORTANT DISCUSSION POINTS: Highlight key topics discussed
-6. NEXT STEPS: What happens next
-
-Meeting Minutes to Analyze:
-{meetingMinutes}
-
-Remember: If not meeting minutes, return the error JSON. If valid, provide the structured summary.
+--- INSTRUCTIONS ---
+- If content type is "email": write a subject line + email body
+- If content type is "blog post": write a title + introduction + 3 main sections + conclusion
+- Match the tone and audience from user preferences
+- Naturally incorporate the hot topics into the content
+- Make it engaging and ready to publish
 `);
 
 function messageContentToString(content: unknown): string {
@@ -79,19 +67,28 @@ function messageContentToString(content: unknown): string {
   return String(content);
 }
 
-app.post("/api/summarize", async (req, res) => {
+app.post("/api/generateContent", async (req, res) => {
   try {
     if (!groqApiKey?.trim()) {
       return res.status(500).json({ error: "GROQ_API_KEY is not configured" });
     }
 
-    const { meetingMinutes } = req.body as { meetingMinutes?: string };
-    if (!meetingMinutes || meetingMinutes.trim() === "") {
-      return res.status(400).json({ error: "Meeting minutes are required" });
+    const { user_preferences, hot_topics_summary } = req.body as {
+      user_preferences?: string;
+      hot_topics_summary?: string;
+    };
+    if (!user_preferences?.trim() || !hot_topics_summary?.trim()) {
+      return res.status(400).json({
+        error:
+          "Both user_preferences and hot_topics_summary are required non-empty strings",
+      });
     }
 
-    const chain = prompt.pipe(model);
-    const result = await chain.invoke({ meetingMinutes });
+    const chain = contentGeneratedPrompt.pipe(model);
+    const result = await chain.invoke({
+      user_preferences,
+      hot_topics_summary,
+    });
 
     res.json({ summary: messageContentToString(result.content) });
   } catch (error) {
