@@ -1,9 +1,12 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { ChatGroq } from "@langchain/groq";
 import { HumanMessage } from "@langchain/core/messages";
 import { PromptTemplate } from "@langchain/core/prompts";
+import { runParallelAnalysis, runSynthesis } from "./services/service";
+import { AnalysisResults } from "./utils/prompts";
+import { logger } from "./utils/logger";
 
 dotenv.config({ path: ".env" });
 
@@ -29,6 +32,9 @@ app.use(
 
 app.use(express.json());
 
+// ============================================================
+//  GROQ CLIENT — content generator
+// ============================================================
 const groqApiKey = process.env.GROQ_API_KEY;
 const groqModelId = process.env.GROQ_MODEL ?? "llama-3.1-8b-instant";
 
@@ -67,7 +73,60 @@ function messageContentToString(content: unknown): string {
   return String(content);
 }
 
-app.post("/api/generateContent", async (req, res) => {
+// ============================================================
+//  FINLAND PIPELINE
+// ============================================================
+async function runFinlandPipeline(): Promise<{
+  duration_seconds: number;
+  analysis: AnalysisResults;
+  summary: string;
+}> {
+  const startTime = Date.now();
+
+  const analysis = await runParallelAnalysis();
+  const summary = await runSynthesis(analysis);
+
+  const duration_seconds = parseFloat(((Date.now() - startTime) / 1000).toFixed(1));
+  logger.success(`Pipeline complete in ${duration_seconds}s`);
+
+  return { duration_seconds, analysis, summary };
+}
+
+// ============================================================
+//  ROUTES
+// ============================================================
+
+// GET /health
+app.get("/health", (_req: Request, res: Response) => {
+  res.json({ status: "ok", groq_token_set: !!process.env.GROQ_API_KEY });
+});
+
+// GET /api/finland-summary — browser friendly
+app.get("/api/finland-summary", async (_req: Request, res: Response) => {
+  logger.divider("📡 GET /api/finland-summary");
+  try {
+    const result = await runFinlandPipeline();
+    res.json({ success: true, ...result });
+  } catch (err) {
+    logger.error((err as Error).message);
+    res.status(500).json({ success: false, error: (err as Error).message });
+  }
+});
+
+// POST /api/finland-summary
+app.post("/api/finland-summary", async (_req: Request, res: Response) => {
+  logger.divider("📡 POST /api/finland-summary");
+  try {
+    const result = await runFinlandPipeline();
+    res.json({ success: true, ...result });
+  } catch (err) {
+    logger.error((err as Error).message);
+    res.status(500).json({ success: false, error: (err as Error).message });
+  }
+});
+
+// POST /api/generateContent
+app.post("/api/generateContent", async (req: Request, res: Response) => {
   try {
     if (!groqApiKey?.trim()) {
       return res.status(500).json({ error: "GROQ_API_KEY is not configured" });
@@ -77,37 +136,30 @@ app.post("/api/generateContent", async (req, res) => {
       user_preferences?: string;
       hot_topics_summary?: string;
     };
+
     if (!user_preferences?.trim() || !hot_topics_summary?.trim()) {
       return res.status(400).json({
-        error:
-          "Both user_preferences and hot_topics_summary are required non-empty strings",
+        error: "Both user_preferences and hot_topics_summary are required non-empty strings",
       });
     }
 
     const chain = contentGeneratedPrompt.pipe(model);
-    const result = await chain.invoke({
-      user_preferences,
-      hot_topics_summary,
-    });
+    const result = await chain.invoke({ user_preferences, hot_topics_summary });
 
-    res.json({ summary: messageContentToString(result.content) });
+    res.json({ content: messageContentToString(result.content) });
   } catch (error) {
     res.status(500).json({
-      error: "Failed to summarize meeting",
+      error: "Failed to generate content",
       details: error instanceof Error ? error.message : "Unknown error",
     });
   }
 });
 
-/** Smoke test: verifies GROQ_API_KEY, network, and model id via Groq API. */
-app.get("/api/groq-test", async (_req, res) => {
+// GET /api/groq-test — smoke test
+app.get("/api/groq-test", async (_req: Request, res: Response) => {
   try {
     if (!groqApiKey?.trim()) {
-      return res.status(500).json({
-        ok: false,
-        provider: "groq",
-        error: "GROQ_API_KEY is not configured",
-      });
+      return res.status(500).json({ ok: false, error: "GROQ_API_KEY is not configured" });
     }
 
     const result = await model.invoke([
@@ -131,11 +183,15 @@ app.get("/api/groq-test", async (_req, res) => {
   }
 });
 
-app.get("/health", (_req, res) => {
-  res.json({ status: "ok" });
-});
-
+// ============================================================
+//  START
+// ============================================================
 const PORT = Number(process.env.PORT) || 3001;
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`\n🇫🇮  Server → http://localhost:${PORT}`);
+  console.log(`     GET  /api/finland-summary   — Finland pipeline`);
+  console.log(`     POST /api/finland-summary   — same`);
+  console.log(`     POST /api/generateContent   — content generator`);
+  console.log(`     GET  /api/groq-test         — smoke test`);
+  console.log(`     GET  /health\n`);
 });
