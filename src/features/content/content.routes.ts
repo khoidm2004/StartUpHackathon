@@ -16,19 +16,29 @@ contentRouter.post("/generateContent", async (req: Request, res: Response) => {
       return res.status(500).json({ error: "GROQ_API_KEY is not configured" });
     }
 
-    const { user_preferences, hot_topics_summary } = req.body as {
+    const { user_preferences, hot_topics_summary, finland_summary } = req.body as {
       user_preferences?: string;
       hot_topics_summary?: string;
+      /** Pass-through from GET/POST /api/finland-summary ({ success, summary, analysis, ... }) */
+      finland_summary?: { summary?: string };
     };
 
-    if (!user_preferences?.trim() || !hot_topics_summary?.trim()) {
+    const summaryFromFinland =
+      typeof finland_summary?.summary === "string" ? finland_summary.summary.trim() : "";
+    const summaryText = summaryFromFinland || hot_topics_summary?.trim() || "";
+
+    if (!user_preferences?.trim() || !summaryText) {
       return res.status(400).json({
-        error: "Both user_preferences and hot_topics_summary are required non-empty strings",
+        error:
+          "user_preferences is required; provide either finland_summary (object with summary from GET /api/finland-summary) or hot_topics_summary as a non-empty string",
       });
     }
 
     const chain = contentGeneratedPrompt.pipe(model);
-    const result = await chain.invoke({ user_preferences, hot_topics_summary });
+    const result = await chain.invoke({
+      user_preferences,
+      hot_topics_summary: summaryText,
+    });
 
     res.json({ content: messageContentToString(result.content) });
   } catch (error) {
