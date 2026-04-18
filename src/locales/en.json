@@ -63,6 +63,17 @@
       "engagement": "Engagement",
       "reach": "Reach",
       "conversion": "Conversion",
+      "cityLabel": "City",
+      "cities": {
+        "helsinki": "Helsinki",
+        "tampere": "Tampere"
+      },
+      "suggestionBasedOn": "Based on: {{topic}}",
+      "cardHottestTopic": "Hottest topic",
+      "cardLongestStreak": "Longest streak",
+      "cardSuggestion": "Suggested next content",
+      "streakValue": "{{count}} weeks",
+      "streakSubtitle": "At #1 in {{city}}",
       "continueFlow": "Continue your flow",
       "continueDesc": "Input → Generate → Edit → Publish. Open the generator to follow the guided steps.",
       "openGenerator": "Open Content Generator",
@@ -71,23 +82,7 @@
       "trendingOverline": "Topic keywords",
       "trendingSubtitle": "What people are searching and talking about—by city.",
       "trendingFootnote": "Relative interest vs. regional baseline (example signals, updated weekly).",
-      "trendingChartAria": "Trending topic keywords for {{city}}",
-      "topics": {
-        "helsinki": {
-          "localDining": "Local dining & openings",
-          "designWeek": "Design & culture week",
-          "innerCity": "Inner-city services",
-          "sustainableRetail": "Sustainable retail",
-          "waterfront": "Waterfront & events"
-        },
-        "tampere": {
-          "saunaCulture": "Sauna & wellness",
-          "studentLife": "Student life & events",
-          "lakeNature": "Lake trails & nature",
-          "tamperePride": "“Tampere” local pride",
-          "industrialHeritage": "Industrial heritage tours"
-        }
-      }
+      "trendingChartAria": "Trending topic keywords for {{city}}"
     },
     "generator": {
       "title": "Content Generator",

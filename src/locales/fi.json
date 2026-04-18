@@ -63,6 +63,17 @@
       "engagement": "Sitoutuminen",
       "reach": "Tavoite",
       "conversion": "Konversio",
+      "cityLabel": "Kaupunki",
+      "cities": {
+        "helsinki": "Helsinki",
+        "tampere": "Tampere"
+      },
+      "suggestionBasedOn": "Perustuu aiheeseen: {{topic}}",
+      "cardHottestTopic": "Kuumin aihe",
+      "cardLongestStreak": "Pisin putki",
+      "cardSuggestion": "Ehdotettu seuraava sisältö",
+      "streakValue": "{{count}} viikkoa",
+      "streakSubtitle": "Ykkösenä: {{city}}",
       "continueFlow": "Jatka työnkulkua",
       "continueDesc": "Syöte → Luo → Muokkaa → Julkaise. Avaa tuottaja seurataksesi ohjattuja vaiheita.",
       "openGenerator": "Avaa sisällöntuottaja",
@@ -71,23 +82,7 @@
       "trendingOverline": "Aihe-avainsanat",
       "trendingSubtitle": "Mitä haetaan ja mistä puhutaan—kaupungeittain.",
       "trendingFootnote": "Suhteellinen kiinnostus alueen keskiarvoon verrattuna (esimerkkisignaaleja, päivitetään viikoittain).",
-      "trendingChartAria": "Trendaavat aihe-avainsanat: {{city}}",
-      "topics": {
-        "helsinki": {
-          "localDining": "Lähiruoka & uudet avaukset",
-          "designWeek": "Design- & kulttuuriviikko",
-          "innerCity": "Keskustan palvelut",
-          "sustainableRetail": "Kestävä vähittäiskauppa",
-          "waterfront": "Ranta & tapahtumat"
-        },
-        "tampere": {
-          "saunaCulture": "Sauna & hyvinvointi",
-          "studentLife": "Opiskelijaelämä & tapahtumat",
-          "lakeNature": "Järvipolut & luonto",
-          "tamperePride": "“Tamperelainen” paikallisylpeys",
-          "industrialHeritage": "Teollisuusperintökierrokset"
-        }
-      }
+      "trendingChartAria": "Trendaavat aihe-avainsanat: {{city}}"
     },
     "generator": {
       "title": "Sisällöntuottaja",
