@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-const CONTENT_TYPE_KEYS = ["ads", "blogPost", "socialMedia", "email"] as const;
+const CONTENT_TYPE_KEYS = ["blogPost", "video", "email"] as const;
 type ContentTypeKey = (typeof CONTENT_TYPE_KEYS)[number];
 
 const SUGGESTION_KEYS = [
@@ -13,13 +13,22 @@ const SUGGESTION_KEYS = [
 
 export function ContentGeneratorPage() {
   const { t } = useTranslation();
-  const [contentType, setContentType] = useState<ContentTypeKey>("socialMedia");
+  const [contentType, setContentType] = useState<ContentTypeKey>("blogPost");
+  /** Content type at last successful generate — output UI keys off this, not `contentType`, so changing chips does not alter the preview. */
+  const [generatedContentType, setGeneratedContentType] =
+    useState<ContentTypeKey | null>(null);
   const [outLang, setOutLang] = useState<"en" | "fi">("en");
   const [generating, setGenerating] = useState(false);
+  const [hasGenerated, setHasGenerated] = useState(false);
 
   const runGenerate = () => {
+    const typeAtClick = contentType;
     setGenerating(true);
-    window.setTimeout(() => setGenerating(false), 1400);
+    window.setTimeout(() => {
+      setGenerating(false);
+      setGeneratedContentType(typeAtClick);
+      setHasGenerated(true);
+    }, 1400);
   };
 
   return (
@@ -28,34 +37,6 @@ export function ContentGeneratorPage() {
         <div>
           <h1 className="page__title">{t("pages.generator.title")}</h1>
           <p className="page__subtitle">{t("pages.generator.subtitle")}</p>
-        </div>
-      </div>
-
-      <div className="steps" aria-label="Progress">
-        <div className="step step--active">
-          <span className="step__num">1</span>
-          {t("pages.generator.stepInput")}
-        </div>
-        <span className="step__arrow" aria-hidden>
-          →
-        </span>
-        <div className="step">
-          <span className="step__num">2</span>
-          {t("pages.generator.stepGenerate")}
-        </div>
-        <span className="step__arrow" aria-hidden>
-          →
-        </span>
-        <div className="step">
-          <span className="step__num">3</span>
-          {t("pages.generator.stepEdit")}
-        </div>
-        <span className="step__arrow" aria-hidden>
-          →
-        </span>
-        <div className="step">
-          <span className="step__num">4</span>
-          {t("pages.generator.stepPublish")}
         </div>
       </div>
 
@@ -137,11 +118,15 @@ export function ContentGeneratorPage() {
                   placeholder={t("pages.generator.geoPh")}
                 />
               </div>
-              <span className="field__hint">{t("pages.generator.geoHint")}</span>
+              <span className="field__hint">
+                {t("pages.generator.geoHint")}
+              </span>
             </div>
 
             <div className="field">
-              <span className="field__label">{t("pages.generator.language")}</span>
+              <span className="field__label">
+                {t("pages.generator.language")}
+              </span>
               <div className="lang-switch" style={{ width: "fit-content" }}>
                 <button
                   type="button"
@@ -158,12 +143,20 @@ export function ContentGeneratorPage() {
                   {t("pages.generator.finnish")}
                 </button>
               </div>
-              <span className="field__hint">{t("pages.generator.outputHint")}</span>
+              <span className="field__hint">
+                {t("pages.generator.outputHint")}
+              </span>
             </div>
 
             <div className="field">
-              <span className="field__label">{t("pages.generator.contentType")}</span>
-              <div className="chip-group" role="radiogroup" aria-label={t("common.ariaContentType")}>
+              <span className="field__label">
+                {t("pages.generator.contentType")}
+              </span>
+              <div
+                className="chip-group"
+                role="radiogroup"
+                aria-label={t("common.ariaContentType")}
+              >
                 {CONTENT_TYPE_KEYS.map((k) => (
                   <button
                     key={k}
@@ -187,7 +180,11 @@ export function ContentGeneratorPage() {
                   gap: 8,
                 }}
               >
-                <label className="field__label" htmlFor="prompt" style={{ margin: 0 }}>
+                <label
+                  className="field__label"
+                  htmlFor="prompt"
+                  style={{ margin: 0 }}
+                >
                   {t("pages.generator.aiPrompt")}
                 </label>
                 <button type="button" className="btn btn--ghost btn--sm">
@@ -202,7 +199,11 @@ export function ContentGeneratorPage() {
               />
               <div className="chip-group" style={{ marginTop: 8 }}>
                 {SUGGESTION_KEYS.map((k) => (
-                  <button key={k} type="button" className="btn btn--ghost btn--sm">
+                  <button
+                    key={k}
+                    type="button"
+                    className="btn btn--ghost btn--sm"
+                  >
                     {t(`pages.generator.suggestionChips.${k}`)}
                   </button>
                 ))}
@@ -210,14 +211,22 @@ export function ContentGeneratorPage() {
             </div>
           </div>
 
-          <div style={{ marginTop: 24, display: "flex", justifyContent: "flex-end" }}>
+          <div
+            style={{
+              marginTop: 24,
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
             <button
               type="button"
               className="btn btn--primary"
               onClick={runGenerate}
               disabled={generating}
             >
-              {generating ? t("common.generating") : t("pages.generator.generateContent")}
+              {generating
+                ? t("common.generating")
+                : t("pages.generator.generateContent")}
             </button>
           </div>
         </div>
@@ -241,30 +250,11 @@ export function ContentGeneratorPage() {
             >
               {t("pages.generator.generatedContent")}
             </h2>
-            <span style={{ fontSize: 13, color: "var(--stone-gray)" }}>
-              {t("common.updatedJustNow")}
-            </span>
-          </div>
-
-          <div className="tabs" role="tablist" aria-label={t("common.ariaOutputLanguage")}>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={outLang === "en"}
-              className={`tab ${outLang === "en" ? "tab--active" : ""}`}
-              onClick={() => setOutLang("en")}
-            >
-              EN
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={outLang === "fi"}
-              className={`tab ${outLang === "fi" ? "tab--active" : ""}`}
-              onClick={() => setOutLang("fi")}
-            >
-              FI
-            </button>
+            {hasGenerated && !generating && (
+              <span style={{ fontSize: 13, color: "var(--stone-gray)" }}>
+                {t("common.updatedJustNow")}
+              </span>
+            )}
           </div>
 
           {generating ? (
@@ -274,10 +264,68 @@ export function ContentGeneratorPage() {
               <div className="skeleton" style={{ height: 14, width: "95%" }} />
               <div className="skeleton" style={{ height: 14, width: "88%" }} />
             </div>
+          ) : !hasGenerated ? (
+            <div
+              style={{
+                padding: "28px 8px 12px",
+                textAlign: "center",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 20,
+                  margin: "0 0 10px",
+                  color: "var(--near-black)",
+                }}
+              >
+                {t("pages.generator.emptyOutputTitle")}
+              </p>
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: 15,
+                  lineHeight: 1.55,
+                  color: "var(--olive-gray)",
+                  maxWidth: 320,
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
+              >
+                {t("pages.generator.emptyOutputBody")}
+              </p>
+            </div>
           ) : (
             <>
+              <div
+                className="tabs"
+                role="tablist"
+                aria-label={t("common.ariaOutputLanguage")}
+              >
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={outLang === "en"}
+                  className={`tab ${outLang === "en" ? "tab--active" : ""}`}
+                  onClick={() => setOutLang("en")}
+                >
+                  EN
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={outLang === "fi"}
+                  className={`tab ${outLang === "fi" ? "tab--active" : ""}`}
+                  onClick={() => setOutLang("fi")}
+                >
+                  FI
+                </button>
+              </div>
+
               {outLang === "en" ? (
-                <article style={{ color: "var(--olive-gray)", lineHeight: 1.6 }}>
+                <article
+                  style={{ color: "var(--olive-gray)", lineHeight: 1.6 }}
+                >
                   <h3
                     style={{
                       fontFamily: "var(--font-serif)",
@@ -288,11 +336,17 @@ export function ContentGeneratorPage() {
                   >
                     {t("pages.generator.sample.enTitle")}
                   </h3>
-                  <p style={{ margin: "0 0 12px" }}>{t("pages.generator.sample.enP1")}</p>
-                  <p style={{ margin: 0 }}>{t("pages.generator.sample.enP2")}</p>
+                  <p style={{ margin: "0 0 12px" }}>
+                    {t("pages.generator.sample.enP1")}
+                  </p>
+                  <p style={{ margin: 0 }}>
+                    {t("pages.generator.sample.enP2")}
+                  </p>
                 </article>
               ) : (
-                <article style={{ color: "var(--olive-gray)", lineHeight: 1.6 }}>
+                <article
+                  style={{ color: "var(--olive-gray)", lineHeight: 1.6 }}
+                >
                   <h3
                     style={{
                       fontFamily: "var(--font-serif)",
@@ -303,8 +357,12 @@ export function ContentGeneratorPage() {
                   >
                     {t("pages.generator.sample.fiTitle")}
                   </h3>
-                  <p style={{ margin: "0 0 12px" }}>{t("pages.generator.sample.fiP1")}</p>
-                  <p style={{ margin: 0 }}>{t("pages.generator.sample.fiP2")}</p>
+                  <p style={{ margin: "0 0 12px" }}>
+                    {t("pages.generator.sample.fiP1")}
+                  </p>
+                  <p style={{ margin: 0 }}>
+                    {t("pages.generator.sample.fiP2")}
+                  </p>
                 </article>
               )}
 
@@ -322,57 +380,66 @@ export function ContentGeneratorPage() {
                 {t("pages.generator.imagePlaceholder")}
               </div>
 
+              {generatedContentType === "video" && (
+                <div
+                  style={{
+                    marginTop: 12,
+                    height: 160,
+                    borderRadius: 16,
+                    background: "var(--dark-surface)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "var(--warm-silver)",
+                    fontSize: 14,
+                  }}
+                >
+                  {t("pages.generator.videoPlaceholder")}
+                </div>
+              )}
+
               <div
                 style={{
-                  marginTop: 12,
-                  height: 160,
-                  borderRadius: 16,
-                  background: "var(--dark-surface)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "var(--warm-silver)",
+                  marginTop: 20,
+                  padding: 12,
+                  background: "var(--ivory)",
+                  border: "1px solid var(--border-cream)",
+                  borderRadius: 12,
                   fontSize: 14,
+                  color: "var(--olive-gray)",
                 }}
               >
-                {t("pages.generator.videoPlaceholder")}
+                <strong style={{ color: "var(--near-black)" }}>
+                  {t("common.tip")}
+                </strong>{" "}
+                {t("pages.generator.bottomTip")}
+              </div>
+
+              <div
+                style={{
+                  marginTop: 16,
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 10,
+                }}
+              >
+                <button type="button" className="btn btn--secondary">
+                  {t("common.edit")}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn--secondary"
+                  onClick={runGenerate}
+                  disabled={generating}
+                >
+                  {t("common.regenerate")}
+                </button>
+                <button type="button" className="btn btn--ghost">
+                  {t("common.copy")}
+                </button>
               </div>
             </>
           )}
-
-          <div
-            style={{
-              marginTop: 20,
-              padding: 12,
-              background: "var(--ivory)",
-              border: "1px solid var(--border-cream)",
-              borderRadius: 12,
-              fontSize: 14,
-              color: "var(--olive-gray)",
-            }}
-          >
-            <strong style={{ color: "var(--near-black)" }}>{t("common.tip")}</strong>{" "}
-            {t("pages.generator.bottomTip")}
-          </div>
-
-          <div
-            style={{
-              marginTop: 16,
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 10,
-            }}
-          >
-            <button type="button" className="btn btn--secondary">
-              {t("common.edit")}
-            </button>
-            <button type="button" className="btn btn--secondary">
-              {t("common.regenerate")}
-            </button>
-            <button type="button" className="btn btn--ghost">
-              {t("common.copy")}
-            </button>
-          </div>
         </div>
       </div>
     </>

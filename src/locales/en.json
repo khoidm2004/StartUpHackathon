@@ -87,10 +87,6 @@
     "generator": {
       "title": "Content Generator",
       "subtitle": "Create GEO-optimized, on-brand copy in English and Finnish.",
-      "stepInput": "Input",
-      "stepGenerate": "Generate",
-      "stepEdit": "Edit",
-      "stepPublish": "Publish",
       "whatCreate": "What should we create?",
       "industry": "Business type / industry",
       "selectIndustry": "Select industry…",
@@ -115,13 +111,14 @@
       "defaultPrompt": "Write a friendly Instagram caption for our winter blend, highlighting ethical sourcing and free shipping in the Helsinki area this week.",
       "generateContent": "Generate Content",
       "generatedContent": "Generated content",
+      "emptyOutputTitle": "No output yet",
+      "emptyOutputBody": "Complete your brief on the left and click Generate Content. Your copy will appear here—like the live service.",
       "imagePlaceholder": "Image placeholder — add creative in editor",
       "videoPlaceholder": "▶ Video script / storyboard placeholder",
       "bottomTip": "Tweak location or audience, then Regenerate for sharper GEO phrasing.",
       "contentTypes": {
-        "ads": "Ads",
         "blogPost": "Blog post",
-        "socialMedia": "Social media",
+        "video": "Video",
         "email": "Email"
       },
       "suggestionChips": {

@@ -87,10 +87,6 @@
     "generator": {
       "title": "Sisällöntuottaja",
       "subtitle": "Luo GEO-optimoitua, brändin mukaista tekstiä englanniksi ja suomeksi.",
-      "stepInput": "Syöte",
-      "stepGenerate": "Luo",
-      "stepEdit": "Muokkaa",
-      "stepPublish": "Julkaise",
       "whatCreate": "Mitä luodaan?",
       "industry": "Toimiala / liiketoiminta",
       "selectIndustry": "Valitse toimiala…",
@@ -115,13 +111,14 @@
       "defaultPrompt": "Kirjoita ystävällinen Instagram-kuvateksti talvisekoituksellemme, korosta eettistä hankintaa ja ilmaista toimitusta Helsingin seudulla tällä viikolla.",
       "generateContent": "Luo sisältö",
       "generatedContent": "Luotu sisältö",
+      "emptyOutputTitle": "Ei tulosta vielä",
+      "emptyOutputBody": "Täytä kuvaus vasemmalla ja napsauta Luo sisältö. Teksti tulee tähän—kuten oikeassa palvelussa.",
       "imagePlaceholder": "Kuvapaikkamerkki — lisää luova editorissa",
       "videoPlaceholder": "▶ Video-/tarinakäsikirjoituksen paikkamerkki",
       "bottomTip": "Säädä sijaintia tai kohderyhmää, sitten Luo uudelleen tarkempaa GEO-ilmaisua varten.",
       "contentTypes": {
-        "ads": "Mainokset",
         "blogPost": "Blogikirjoitus",
-        "socialMedia": "Sosiaalinen media",
+        "video": "Video",
         "email": "Sähköposti"
       },
       "suggestionChips": {
