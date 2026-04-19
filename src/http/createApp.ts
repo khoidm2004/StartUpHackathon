@@ -7,7 +7,7 @@ import { companiesRouter } from "../features/companies/companies.routes";
 import { topicsRouter } from "../features/topics/topics.routes";
 
 
-const allowedOrigins = ["http://localhost:3000", "http://localhost:5174", "http://localhost:5173"].filter(
+const allowedOrigins = ["http://localhost:3000", "http://localhost:5174", "http://localhost:5173", "https://start-up-hackathon.vercel.app"].filter(
   (o): o is string => Boolean(o),
 );
 
