@@ -5,6 +5,8 @@ import { finlandRouter } from "../features/finland/finland.routes";
 import { contentRouter } from "../features/content/content.routes";
 import { companiesRouter } from "../features/companies/companies.routes";
 import { topicsRouter } from "../features/topics/topics.routes";
+import { suggestionRouter } from "../features/suggestions/suggestion.routes";
+
 
 
 const allowedOrigins = ["http://localhost:3000", "http://localhost:5174", "http://localhost:5173", "https://start-up-hackathon.vercel.app"].filter(
@@ -34,6 +36,7 @@ export function createApp() {
   app.use("/api", contentRouter);
   app.use("/api", companiesRouter);
   app.use("/api", topicsRouter);
+  app.use("/api", suggestionRouter);
 
   return app;
 }
