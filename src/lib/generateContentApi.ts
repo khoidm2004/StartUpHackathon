@@ -101,7 +101,7 @@ export async function requestGenerateContent(
     user_preferences,
   };
 
-  const url = apiUrl("/generateContent");
+  const url = apiUrl("/api/generateContent");
   const res = await fetch(url, {
     method: "POST",
     headers: {
