@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { fetchTopicsByCity } from "../lib/topicsApi";
 import type { TopicFromApi } from "../types/topics";
+import { fetchSuggestion, type SuggestionResult } from "../lib/generateContentApi";
 
 type CityId = "helsinki" | "tampere";
 
@@ -39,6 +40,8 @@ export function DashboardPage() {
   const [topics, setTopics] = useState<TopicFromApi[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [suggestion, setSuggestion] = useState<SuggestionResult | null>(null);
+  const [suggestionLoading, setSuggestionLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
@@ -65,12 +68,18 @@ export function DashboardPage() {
     };
   }, [city]);
 
+  useEffect(() => {
+    fetchSuggestion()
+      .then(setSuggestion)
+      .catch(() => setSuggestion(null))
+      .finally(() => setSuggestionLoading(false));
+  }, []);
+
   const hottest = useMemo(() => getHottest(topics), [topics]);
   const cityName = t(`pages.dashboard.cities.${city}`);
 
   const hottestTitle = hottest?.title ?? "";
   const streakDays = hottest?.streak_days ?? 0;
-  const suggestion = hottest?.description ?? "";
 
   return (
     <>
@@ -227,7 +236,7 @@ export function DashboardPage() {
           >
             {t("pages.dashboard.cardSuggestion")}
           </p>
-          {loading ? (
+          {suggestionLoading ? (
             <p style={{ margin: 0, color: "var(--stone-gray)" }}>
               {t("pages.dashboard.topicsLoading")}
             </p>
@@ -241,7 +250,7 @@ export function DashboardPage() {
                   color: "var(--olive-gray)",
                 }}
               >
-                {suggestion || t("pages.dashboard.topicsEmpty")}
+                {suggestion?.suggestion || t("pages.dashboard.topicsEmpty")}
               </p>
               <p
                 style={{
@@ -251,7 +260,7 @@ export function DashboardPage() {
                 }}
               >
                 {t("pages.dashboard.suggestionBasedOn", {
-                  topic: hottestTitle || "—",
+                  topic: suggestion?.based_on.topic || "—",
                 })}
               </p>
             </>

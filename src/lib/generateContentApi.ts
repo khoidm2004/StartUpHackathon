@@ -151,3 +151,27 @@ export async function requestGenerateContent(
 
   return { content, title };
 }
+
+export type SuggestionResult = {
+  suggestion: string;
+  based_on: {
+    topic: string;
+    city: string;
+    company: string;
+  };
+};
+
+export async function fetchSuggestion(): Promise<SuggestionResult> {
+  const res = await fetch(apiUrl("/api/suggestion"), {
+    method: "GET",
+    headers: { Accept: "application/json" },
+  });
+
+  const data = await res.json() as Record<string, unknown>;
+
+  if (!res.ok || !data.success) {
+    throw new Error((typeof data.error === "string" && data.error) || "Failed to fetch suggestion");
+  }
+
+  return data as unknown as SuggestionResult;
+}
