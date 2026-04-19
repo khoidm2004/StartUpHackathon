@@ -18,7 +18,7 @@ export const analysisPrompt = PromptTemplate.fromTemplate(`You are a Finland tre
 **Use exactly these seven sections** (## headings in this order). Each section: short intro sentence plus bullets or compact paragraphs—depth over filler.
 
 ## 1. Cities & local hotspots
-Major cities and regions (e.g. Helsinki capital region, Tampere, Turku, Oulu, Rovaniemi/Lapland): what locals and visitors care about—neighborhoods, retail, events, mobility, seasonal urban life.
+Major cities and regions (Helsinki capital region, Tampere only): what locals and visitors care about—neighborhoods, retail, events, mobility, seasonal urban life.
 
 ## 2. Culture, arts & entertainment
 Music, publishing, games, film/TV/streaming, festivals, museums, theater; what is breaking through culturally or in social chatter.

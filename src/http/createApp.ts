@@ -4,6 +4,7 @@ import { healthRouter } from "./health.routes";
 import { finlandRouter } from "../features/finland/finland.routes";
 import { contentRouter } from "../features/content/content.routes";
 import { companiesRouter } from "../features/companies/companies.routes";
+import { topicsRouter } from "../features/topics/topics.routes";
 
 
 const allowedOrigins = ["http://localhost:3000", "http://localhost:5174", "http://localhost:5173"].filter(
@@ -32,6 +33,7 @@ export function createApp() {
   app.use("/api", finlandRouter);
   app.use("/api", contentRouter);
   app.use("/api", companiesRouter);
+  app.use("/api", topicsRouter);
 
   return app;
 }
