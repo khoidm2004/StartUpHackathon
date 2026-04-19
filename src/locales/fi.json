@@ -191,7 +191,13 @@
       "headquartersHint": "Rekisteröity tai päätoimipaikka—käytetään ensisijaisena GEO-viitteenä.",
       "operatingLocations": "Liiketoiminnan toiminta-alueet",
       "operatingLocationsPh": "esim. Uusimaa, Tampereen seutu; tai yksi kaupunki tai alue riville",
-      "operatingLocationsHint": "Alueet, kaupungit tai maat, joissa myyt tai palvelet—erota pilkuilla tai rivinvaihdoilla."
+      "operatingLocationsHint": "Alueet, kaupungit tai maat, joissa myyt tai palvelet—erota pilkuilla tai rivinvaihdoilla.",
+      "companiesLoading": "Ladataan yritystietoja…",
+      "companiesError": "Yritystietoja ei voitu ladata: {{message}}",
+      "companiesEmpty": "Tietokannasta ei löytynyt yritystietuetta.",
+      "selectCompanyRecord": "Yritystietue",
+      "brandDescription": "Yrityskuvaus",
+      "brandDescriptionHint": "Synkronoitu työtilastasi; voit muokata."
     },
     "analytics": {
       "title": "Analytiikka ja GEO-näkemykset",

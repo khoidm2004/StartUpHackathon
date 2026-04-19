@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import type { Company } from "../stores/companyStore";
+import { useCompanyStore } from "../stores/companyStore";
 
 const INDUSTRY_PRESET_KEYS = [
   "food",
@@ -14,11 +16,38 @@ const INDUSTRY_PRESET_KEYS = [
 
 export function BrandProfilePage() {
   const { t } = useTranslation();
+  const { companies, loading, error, fetchCompanies } = useCompanyStore();
+
+  const [selectedCompanyId, setSelectedCompanyId] = useState<string | null>(null);
   const [brandName, setBrandName] = useState("");
   const [headquarters, setHeadquarters] = useState("");
   const [operatingLocations, setOperatingLocations] = useState("");
+  const [brandDescription, setBrandDescription] = useState("");
   const [industries, setIndustries] = useState<string[]>([]);
   const [industryDraft, setIndustryDraft] = useState("");
+
+  useEffect(() => {
+    void fetchCompanies();
+  }, [fetchCompanies]);
+
+  const applyCompanyToForm = useCallback((c: Company) => {
+    setBrandName(c.company_name);
+    setHeadquarters(c.hq_location);
+    setOperatingLocations(c.business_operating_locations.join("\n"));
+    setBrandDescription(c.description);
+    setIndustries([...c.industries]);
+  }, []);
+
+  useEffect(() => {
+    if (loading || error || companies.length === 0 || selectedCompanyId !== null) return;
+    setSelectedCompanyId(companies[0].id);
+  }, [loading, error, companies, selectedCompanyId]);
+
+  useEffect(() => {
+    if (selectedCompanyId === null) return;
+    const c = useCompanyStore.getState().companies.find((co) => co.id === selectedCompanyId);
+    if (c) applyCompanyToForm(c);
+  }, [selectedCompanyId, applyCompanyToForm]);
 
   const togglePreset = (key: string) => {
     const label = t(`pages.brand.industryPresets.${key}`);
@@ -75,6 +104,47 @@ export function BrandProfilePage() {
           >
             {t("pages.brand.sectionIdentityLead")}
           </p>
+
+          {loading && (
+            <p style={{ margin: "0 0 20px", fontSize: 14, color: "var(--olive-gray)" }}>
+              {t("pages.brand.companiesLoading")}
+            </p>
+          )}
+
+          {error && (
+            <p
+              style={{ margin: "0 0 20px", fontSize: 14, color: "var(--stone-gray)" }}
+              role="alert"
+            >
+              {t("pages.brand.companiesError", { message: error })}
+            </p>
+          )}
+
+          {!loading && !error && companies.length === 0 && (
+            <p style={{ margin: "0 0 20px", fontSize: 14, color: "var(--olive-gray)" }}>
+              {t("pages.brand.companiesEmpty")}
+            </p>
+          )}
+
+          {!loading && !error && companies.length > 1 && (
+            <div className="field" style={{ marginBottom: 8 }}>
+              <label className="field__label" htmlFor="company-record">
+                {t("pages.brand.selectCompanyRecord")}
+              </label>
+              <select
+                id="company-record"
+                className="input"
+                value={selectedCompanyId ?? ""}
+                onChange={(e) => setSelectedCompanyId(e.target.value || null)}
+              >
+                {companies.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.company_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
             <div className="field">
@@ -176,6 +246,20 @@ export function BrandProfilePage() {
                 placeholder={t("pages.brand.operatingLocationsPh")}
               />
               <span className="field__hint">{t("pages.brand.operatingLocationsHint")}</span>
+            </div>
+
+            <div className="field">
+              <label className="field__label" htmlFor="brand-description">
+                {t("pages.brand.brandDescription")}
+              </label>
+              <textarea
+                id="brand-description"
+                className="textarea"
+                rows={6}
+                value={brandDescription}
+                onChange={(e) => setBrandDescription(e.target.value)}
+              />
+              <span className="field__hint">{t("pages.brand.brandDescriptionHint")}</span>
             </div>
           </div>
 

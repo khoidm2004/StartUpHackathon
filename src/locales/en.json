@@ -191,7 +191,13 @@
       "headquartersHint": "Registered or main office—used as your primary GEO reference.",
       "operatingLocations": "Business operating locations",
       "operatingLocationsPh": "e.g. Uusimaa, Tampere region; or one city or region per line",
-      "operatingLocationsHint": "Regions, cities, or countries where you sell or serve customers—separate with commas or new lines."
+      "operatingLocationsHint": "Regions, cities, or countries where you sell or serve customers—separate with commas or new lines.",
+      "companiesLoading": "Loading company data…",
+      "companiesError": "Could not load company data: {{message}}",
+      "companiesEmpty": "No company record found in the database.",
+      "selectCompanyRecord": "Company record",
+      "brandDescription": "Company profile",
+      "brandDescriptionHint": "Synced from your workspace; edit as needed."
     },
     "analytics": {
       "title": "Analytics & GEO Insights",
