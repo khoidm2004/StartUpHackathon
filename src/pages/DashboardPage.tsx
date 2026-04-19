@@ -1,77 +1,21 @@
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { fetchTopicsByCity } from "../lib/topicsApi";
+import type { TopicFromApi } from "../types/topics";
 
 type CityId = "helsinki" | "tampere";
 
-/** Topic trend row — labels are API-style data (English), not UI translations. */
-type TopicRow = { key: string; label: string; value: number };
-
-const CITY_TOPICS: Record<CityId, TopicRow[]> = {
-  helsinki: [
-    { key: "localDining", label: "Local dining & openings", value: 92 },
-    { key: "designWeek", label: "Design & culture week", value: 78 },
-    { key: "sustainableRetail", label: "Sustainable retail", value: 85 },
-    { key: "innerCity", label: "Inner-city services", value: 71 },
-    { key: "waterfront", label: "Waterfront & events", value: 63 },
-  ],
-  tampere: [
-    { key: "tamperePride", label: "“Tampere” local pride", value: 91 },
-    { key: "saunaCulture", label: "Sauna & wellness", value: 88 },
-    { key: "studentLife", label: "Student life & events", value: 74 },
-    { key: "industrialHeritage", label: "Industrial heritage tours", value: 77 },
-    { key: "lakeNature", label: "Lake trails & nature", value: 69 },
-  ],
+const CITY_TO_API: Record<CityId, "Helsinki" | "Tampere"> = {
+  helsinki: "Helsinki",
+  tampere: "Tampere",
 };
 
-/** Content ideas keyed by topic — English source data for the suggestion card. */
-const TOPIC_SUGGESTIONS: Record<CityId, Record<string, string>> = {
-  helsinki: {
-    localDining:
-      "Pitch a weekend brunch Reels series naming two or three neighborhoods you deliver to.",
-    designWeek:
-      "Bundle event dates with venue names in a short blog post and recap it in Stories.",
-    sustainableRetail:
-      "Highlight one supplier story plus a measurable claim (distance, certification, batch size).",
-    innerCity:
-      "Publish a carousel of services ‘near me’ with hours and walking distance from metro stops.",
-    waterfront:
-      "Tie a limited offer to evening and weekend weather windows along the shore.",
-  },
-  tampere: {
-    tamperePride:
-      "Run a customer-quote mini-campaign with district tags and #Tampere in every asset.",
-    saunaCulture:
-      "Pair one sauna + one local maker in a calm, non-luxury tone—specific names, no clichés.",
-    studentLife:
-      "Time a student offer to term start and mention pickup points near campus.",
-    industrialHeritage:
-      "Turn a factory or museum route into a three-part threaded post series.",
-    lakeNature:
-      "Promote a ‘15 minutes from centre’ trail with parking, stroller access, and a soft CTA.",
-  },
-};
-
-/** Weeks the current #1 topic has held the top spot (preview data). */
-const STREAK_WEEKS: Record<CityId, Record<string, number>> = {
-  helsinki: {
-    localDining: 12,
-    designWeek: 5,
-    sustainableRetail: 8,
-    innerCity: 6,
-    waterfront: 4,
-  },
-  tampere: {
-    tamperePride: 10,
-    saunaCulture: 9,
-    studentLife: 7,
-    industrialHeritage: 6,
-    lakeNature: 5,
-  },
-};
-
-function getHottest(topics: TopicRow[]): TopicRow {
-  return topics.reduce((best, cur) => (cur.value > best.value ? cur : best));
+function getHottest(topics: TopicFromApi[]): TopicFromApi | null {
+  if (!topics.length) return null;
+  return topics.reduce((best, cur) =>
+    cur.trend_score > best.trend_score ? cur : best,
+  );
 }
 
 function TopicBarRow({ label, value }: { label: string; value: number }) {
@@ -92,15 +36,41 @@ export function DashboardPage() {
   const { t } = useTranslation();
   const citySelectId = useId();
   const [city, setCity] = useState<CityId>("helsinki");
+  const [topics, setTopics] = useState<TopicFromApi[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const topics = CITY_TOPICS[city];
+  useEffect(() => {
+    let cancelled = false;
+    const apiCity = CITY_TO_API[city];
+    setLoading(true);
+    setError(null);
+    fetchTopicsByCity(apiCity)
+      .then((data) => {
+        if (!cancelled) {
+          setTopics(data.topics ?? []);
+        }
+      })
+      .catch((e: unknown) => {
+        if (!cancelled) {
+          setTopics([]);
+          setError(e instanceof Error ? e.message : "Failed to load topics");
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [city]);
+
   const hottest = useMemo(() => getHottest(topics), [topics]);
   const cityName = t(`pages.dashboard.cities.${city}`);
 
-  const hottestTitle = hottest.label;
-  const streakWeeks = STREAK_WEEKS[city][hottest.key] ?? 0;
-  const suggestion =
-    TOPIC_SUGGESTIONS[city][hottest.key] ?? "";
+  const hottestTitle = hottest?.title ?? "";
+  const streakDays = hottest?.streak_days ?? 0;
+  const suggestion = hottest?.description ?? "";
 
   return (
     <>
@@ -132,6 +102,22 @@ export function DashboardPage() {
         </select>
       </div>
 
+      {error ? (
+        <p
+          role="alert"
+          style={{
+            margin: "0 0 20px",
+            padding: 12,
+            borderRadius: 8,
+            background: "rgba(180, 80, 80, 0.08)",
+            color: "var(--near-black)",
+            fontSize: 14,
+          }}
+        >
+          {t("pages.dashboard.topicsError", { message: error })}
+        </p>
+      ) : null}
+
       <div className="grid-3" style={{ marginBottom: 24 }}>
         <div className="card">
           <p
@@ -145,30 +131,51 @@ export function DashboardPage() {
           >
             {t("pages.dashboard.cardHottestTopic")}
           </p>
-          <p
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: 26,
-              lineHeight: 1.2,
-              margin: "0 0 12px",
-              color: "var(--near-black)",
-            }}
-          >
-            {hottestTitle}
-          </p>
-          <p style={{ margin: 0, fontSize: 14, color: "var(--stone-gray)" }}>
-            {cityName}
-          </p>
-          <div
-            className="topic-bar-row__track"
-            style={{ marginTop: 16 }}
-            aria-hidden
-          >
-            <div
-              className="topic-bar-row__fill"
-              style={{ width: `${hottest.value}%` }}
-            />
-          </div>
+          {loading ? (
+            <p style={{ margin: 0, color: "var(--stone-gray)" }}>
+              {t("pages.dashboard.topicsLoading")}
+            </p>
+          ) : (
+            <>
+              <p
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 26,
+                  lineHeight: 1.2,
+                  margin: "0 0 12px",
+                  color: "var(--near-black)",
+                }}
+              >
+                {hottestTitle || t("pages.dashboard.topicsEmpty")}
+              </p>
+              {hottest ? (
+                <p
+                  style={{
+                    margin: "0 0 8px",
+                    fontSize: 13,
+                    color: "var(--olive-gray)",
+                  }}
+                >
+                  {hottest.category}
+                </p>
+              ) : null}
+              <p style={{ margin: 0, fontSize: 14, color: "var(--stone-gray)" }}>
+                {cityName}
+              </p>
+              <div
+                className="topic-bar-row__track"
+                style={{ marginTop: 16 }}
+                aria-hidden
+              >
+                {hottest ? (
+                  <div
+                    className="topic-bar-row__fill"
+                    style={{ width: `${hottest.trend_score}%` }}
+                  />
+                ) : null}
+              </div>
+            </>
+          )}
         </div>
 
         <div className="card">
@@ -183,19 +190,29 @@ export function DashboardPage() {
           >
             {t("pages.dashboard.cardLongestStreak")}
           </p>
-          <p
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: 32,
-              margin: "0 0 8px",
-              color: "var(--near-black)",
-            }}
-          >
-            {t("pages.dashboard.streakValue", { count: streakWeeks })}
-          </p>
-          <p style={{ margin: 0, fontSize: 14, color: "var(--olive-gray)" }}>
-            {t("pages.dashboard.streakSubtitle", { city: cityName })}
-          </p>
+          {loading ? (
+            <p style={{ margin: 0, color: "var(--stone-gray)" }}>
+              {t("pages.dashboard.topicsLoading")}
+            </p>
+          ) : (
+            <>
+              <p
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 32,
+                  margin: "0 0 8px",
+                  color: "var(--near-black)",
+                }}
+              >
+                {hottest
+                  ? t("pages.dashboard.streakValue", { count: streakDays })
+                  : "—"}
+              </p>
+              <p style={{ margin: 0, fontSize: 14, color: "var(--olive-gray)" }}>
+                {t("pages.dashboard.streakSubtitle", { city: cityName })}
+              </p>
+            </>
+          )}
         </div>
 
         <div className="card">
@@ -210,27 +227,35 @@ export function DashboardPage() {
           >
             {t("pages.dashboard.cardSuggestion")}
           </p>
-          <p
-            style={{
-              margin: 0,
-              fontSize: 16,
-              lineHeight: 1.55,
-              color: "var(--olive-gray)",
-            }}
-          >
-            {suggestion}
-          </p>
-          <p
-            style={{
-              margin: "14px 0 0",
-              fontSize: 12,
-              color: "var(--stone-gray)",
-            }}
-          >
-            {t("pages.dashboard.suggestionBasedOn", {
-              topic: hottestTitle,
-            })}
-          </p>
+          {loading ? (
+            <p style={{ margin: 0, color: "var(--stone-gray)" }}>
+              {t("pages.dashboard.topicsLoading")}
+            </p>
+          ) : (
+            <>
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: 16,
+                  lineHeight: 1.55,
+                  color: "var(--olive-gray)",
+                }}
+              >
+                {suggestion || t("pages.dashboard.topicsEmpty")}
+              </p>
+              <p
+                style={{
+                  margin: "14px 0 0",
+                  fontSize: 12,
+                  color: "var(--stone-gray)",
+                }}
+              >
+                {t("pages.dashboard.suggestionBasedOn", {
+                  topic: hottestTitle || "—",
+                })}
+              </p>
+            </>
+          )}
         </div>
       </div>
 
@@ -277,11 +302,21 @@ export function DashboardPage() {
               city: cityName,
             })}
           >
-            {topics.map(({ key, label, value }) => (
-              <div key={key} role="listitem">
-                <TopicBarRow label={label} value={value} />
-              </div>
-            ))}
+            {loading ? (
+              <p style={{ margin: 0, color: "var(--stone-gray)" }}>
+                {t("pages.dashboard.topicsLoading")}
+              </p>
+            ) : topics.length === 0 ? (
+              <p style={{ margin: 0, color: "var(--stone-gray)" }}>
+                {t("pages.dashboard.topicsEmpty")}
+              </p>
+            ) : (
+              topics.map((topic) => (
+                <div key={`${topic.rank}-${topic.title}`} role="listitem">
+                  <TopicBarRow label={topic.title} value={topic.trend_score} />
+                </div>
+              ))
+            )}
           </div>
         </div>
         <p

@@ -69,10 +69,13 @@
         "tampere": "Tampere"
       },
       "suggestionBasedOn": "Based on: {{topic}}",
+      "topicsLoading": "Loading topics…",
+      "topicsError": "Could not load topics: {{message}}",
+      "topicsEmpty": "No topics for this city yet.",
       "cardHottestTopic": "Hottest topic",
       "cardLongestStreak": "Longest streak",
       "cardSuggestion": "Suggested next content",
-      "streakValue": "{{count}} weeks",
+      "streakValue": "{{count}} days",
       "streakSubtitle": "At #1 in {{city}}",
       "continueFlow": "Continue your flow",
       "continueDesc": "Input → Generate → Edit → Publish. Open the generator to follow the guided steps.",
@@ -81,7 +84,7 @@
       "trendingTitle": "Hot trend topics",
       "trendingOverline": "Topic keywords",
       "trendingSubtitle": "What people are searching and talking about—by city.",
-      "trendingFootnote": "Relative interest vs. regional baseline (example signals, updated weekly).",
+      "trendingFootnote": "Trend score 1–100 from the Topics API (hot topics by city).",
       "trendingChartAria": "Trending topic keywords for {{city}}"
     },
     "generator": {

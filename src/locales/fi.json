@@ -69,10 +69,13 @@
         "tampere": "Tampere"
       },
       "suggestionBasedOn": "Perustuu aiheeseen: {{topic}}",
+      "topicsLoading": "Ladataan aiheita…",
+      "topicsError": "Aiheita ei voitu ladata: {{message}}",
+      "topicsEmpty": "Tälle kaupungille ei ole vielä aiheita.",
       "cardHottestTopic": "Kuumin aihe",
       "cardLongestStreak": "Pisin putki",
       "cardSuggestion": "Ehdotettu seuraava sisältö",
-      "streakValue": "{{count}} viikkoa",
+      "streakValue": "{{count}} päivää",
       "streakSubtitle": "Ykkösenä: {{city}}",
       "continueFlow": "Jatka työnkulkua",
       "continueDesc": "Syöte → Luo → Muokkaa → Julkaise. Avaa tuottaja seurataksesi ohjattuja vaiheita.",
@@ -81,7 +84,7 @@
       "trendingTitle": "Kuumat trendiaiheet",
       "trendingOverline": "Aihe-avainsanat",
       "trendingSubtitle": "Mitä haetaan ja mistä puhutaan—kaupungeittain.",
-      "trendingFootnote": "Suhteellinen kiinnostus alueen keskiarvoon verrattuna (esimerkkisignaaleja, päivitetään viikoittain).",
+      "trendingFootnote": "Trendipisteet 1–100 Topics API:sta (kuumimmat aiheet kaupungeittain).",
       "trendingChartAria": "Trendaavat aihe-avainsanat: {{city}}"
     },
     "generator": {
