@@ -40,7 +40,13 @@ contentRouter.post("/generateContent", async (req: Request, res: Response) => {
       hot_topics_summary: summaryText,
     });
 
-    res.json({ content: messageContentToString(result.content) });
+    const raw = messageContentToString(result.content);
+    const clean = raw
+      .replace(/\*\*(.*?)\*\*/g, "$1")   // bold
+      .replace(/\*(.*?)\*/g, "$1")        // italic
+      .replace(/#{1,6}\s/g, "");          // headings
+
+    res.json({ content: clean });
   } catch (error) {
     res.status(500).json({
       error: "Failed to generate content",
