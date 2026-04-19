@@ -22,7 +22,7 @@ Context: {topic_description}
 
 --- OUTPUT RULES ---
 Output ONLY the suggestion. No labels, no explanations, no "Here is my suggestion:".
-Write 2–3 sentences maximum.
+Write 2 sentences maximum.
 Be specific — mention the company name, the city, and a concrete content format (e.g. Instagram post, email campaign, blog post).
 Make it actionable and ready to hand to a copywriter.
 `);
