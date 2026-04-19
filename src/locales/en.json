@@ -110,6 +110,7 @@
       "suggestions": "Suggestions",
       "defaultPrompt": "Write a friendly Instagram caption for our winter blend, highlighting ethical sourcing and free shipping in the Helsinki area this week.",
       "generateContent": "Generate Content",
+      "generateError": "Could not generate content: {{message}}",
       "generatedContent": "Generated content",
       "emptyOutputTitle": "No output yet",
       "emptyOutputBody": "Complete your brief on the left and click Generate Content. Your copy will appear here—like the live service.",

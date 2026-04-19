@@ -110,6 +110,7 @@
       "suggestions": "Ehdotukset",
       "defaultPrompt": "Kirjoita ystävällinen Instagram-kuvateksti talvisekoituksellemme, korosta eettistä hankintaa ja ilmaista toimitusta Helsingin seudulla tällä viikolla.",
       "generateContent": "Luo sisältö",
+      "generateError": "Sisällön luonti epäonnistui: {{message}}",
       "generatedContent": "Luotu sisältö",
       "emptyOutputTitle": "Ei tulosta vielä",
       "emptyOutputBody": "Täytä kuvaus vasemmalla ja napsauta Luo sisältö. Teksti tulee tähän—kuten oikeassa palvelussa.",

@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { requestGenerateContent } from "../lib/generateContentApi";
+import { useCompanyStore } from "../stores/companyStore";
+import {
+  CONTENT_TYPE_KEYS,
+  type ContentGeneratorCloudPayload,
+  type ContentTypeKey,
+} from "../types/contentGenerator";
 
-const CONTENT_TYPE_KEYS = ["blogPost", "video", "email"] as const;
-type ContentTypeKey = (typeof CONTENT_TYPE_KEYS)[number];
-
-/** All form values suitable for sending to a cloud/API (e.g. generate or save). */
-export type ContentGeneratorCloudPayload = {
-  /** Selected industry key, e.g. `food`, `retail`, `professional`, `health`, or `""` if unset. */
-  industry: string;
-  audience: string;
-  geo: string;
-  outputLanguage: "en" | "fi";
-  contentType: ContentTypeKey;
-  prompt: string;
-};
+export type { ContentGeneratorCloudPayload } from "../types/contentGenerator";
 
 const SUGGESTION_KEYS = [
   "seasonalPromo",
@@ -24,6 +19,8 @@ const SUGGESTION_KEYS = [
 
 export function ContentGeneratorPage() {
   const { t } = useTranslation();
+  const { companies, fetchCompanies } = useCompanyStore();
+
   const [contentType, setContentType] = useState<ContentTypeKey>("blogPost");
   /** Content type at last successful generate — output UI keys off this, not `contentType`, so changing chips does not alter the preview. */
   const [generatedContentType, setGeneratedContentType] =
@@ -39,10 +36,22 @@ export function ContentGeneratorPage() {
   const [prompt, setPrompt] = useState("");
   const [generating, setGenerating] = useState(false);
   const [hasGenerated, setHasGenerated] = useState(false);
+  const [generateError, setGenerateError] = useState<string | null>(null);
+  /** When set, shown instead of locale sample copy. */
+  const [generatedTitleFromApi, setGeneratedTitleFromApi] = useState<string | null>(
+    null,
+  );
+  const [generatedBodyFromApi, setGeneratedBodyFromApi] = useState<string | null>(
+    null,
+  );
 
   useEffect(() => {
     setPrompt(t("pages.generator.defaultPrompt"));
   }, [t]);
+
+  useEffect(() => {
+    void fetchCompanies();
+  }, [fetchCompanies]);
 
   /** Collects current form values for cloud/API requests (generate, save draft, etc.). */
   const getFormPayload = (): ContentGeneratorCloudPayload => ({
@@ -54,21 +63,34 @@ export function ContentGeneratorPage() {
     prompt,
   });
 
-  const runGenerate = () => {
+  const runGenerate = async () => {
     const typeAtClick = contentType;
     const langAtClick = outLang;
-    const payloadForCloud = getFormPayload();
+    setGenerateError(null);
     setGenerating(true);
-    window.setTimeout(() => {
-      setGenerating(false);
+    try {
+      const result = await requestGenerateContent(
+        getFormPayload(),
+        companies[0] ?? null,
+      );
       setGeneratedContentType(typeAtClick);
       setGeneratedOutLang(langAtClick);
       setHasGenerated(true);
-      void payloadForCloud;
-    }, 1400);
-
-    console.log(payloadForCloud);
+      setGeneratedTitleFromApi(result.title);
+      setGeneratedBodyFromApi(result.content);
+    } catch (e) {
+      setGenerateError(e instanceof Error ? e.message : String(e));
+      setHasGenerated(false);
+      setGeneratedTitleFromApi(null);
+      setGeneratedBodyFromApi(null);
+    } finally {
+      setGenerating(false);
+    }
   };
+
+  const showApiOutput = Boolean(
+    generatedBodyFromApi?.trim() || generatedTitleFromApi?.trim(),
+  );
 
   return (
     <>
@@ -268,6 +290,20 @@ export function ContentGeneratorPage() {
             </div>
           </div>
 
+          {generateError && (
+            <p
+              role="alert"
+              style={{
+                marginTop: 16,
+                marginBottom: 0,
+                fontSize: 14,
+                color: "var(--stone-gray)",
+              }}
+            >
+              {t("pages.generator.generateError", { message: generateError })}
+            </p>
+          )}
+
           <div
             style={{
               marginTop: 24,
@@ -278,7 +314,7 @@ export function ContentGeneratorPage() {
             <button
               type="button"
               className="btn btn--primary"
-              onClick={runGenerate}
+              onClick={() => void runGenerate()}
               disabled={generating}
             >
               {generating
@@ -354,7 +390,27 @@ export function ContentGeneratorPage() {
             </div>
           ) : (
             <>
-              {generatedOutLang === "en" ? (
+              {showApiOutput ? (
+                <article
+                  style={{ color: "var(--olive-gray)", lineHeight: 1.6 }}
+                >
+                  {generatedTitleFromApi?.trim() ? (
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-serif)",
+                        fontSize: 20,
+                        color: "var(--near-black)",
+                        margin: "0 0 12px",
+                      }}
+                    >
+                      {generatedTitleFromApi}
+                    </h3>
+                  ) : null}
+                  <div style={{ whiteSpace: "pre-wrap", margin: 0 }}>
+                    {generatedBodyFromApi?.trim() ?? ""}
+                  </div>
+                </article>
+              ) : generatedOutLang === "en" ? (
                 <article
                   style={{ color: "var(--olive-gray)", lineHeight: 1.6 }}
                 >
@@ -461,7 +517,7 @@ export function ContentGeneratorPage() {
                 <button
                   type="button"
                   className="btn btn--secondary"
-                  onClick={runGenerate}
+                  onClick={() => void runGenerate()}
                   disabled={generating}
                 >
                   {t("common.regenerate")}
