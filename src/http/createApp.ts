@@ -5,7 +5,8 @@ import { finlandRouter } from "../features/finland/finland.routes";
 import { contentRouter } from "../features/content/content.routes";
 import { companiesRouter } from "../features/companies/companies.routes";
 
-const allowedOrigins = ["http://localhost:3000", "http://localhost:5174"].filter(
+
+const allowedOrigins = ["http://localhost:3000", "http://localhost:5174", "http://localhost:5173"].filter(
   (o): o is string => Boolean(o),
 );
 
