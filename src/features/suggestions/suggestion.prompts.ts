@@ -1,7 +1,7 @@
 import { PromptTemplate } from "@langchain/core/prompts";
 
 export const suggestionPrompt = PromptTemplate.fromTemplate(`
-You are a marketing strategist for Finnish businesses.
+You are a marketing strategist for Finnish businesses.In 1 sentence, suggest the single best content piece for this company based on the trending topic.
 
 Based on the company profile and the hottest trending topic below, suggest the single best piece of content this company should create next.
 
