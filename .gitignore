@@ -4,3 +4,8 @@ dist/
 .env.local
 *.log
 .DS_Store
+
+# AI coding workflow (MAS template) — local-only, not shared via the repo
+.claude/
+Artifacts/
+CLAUDE.md
