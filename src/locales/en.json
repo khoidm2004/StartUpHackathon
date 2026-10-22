@@ -269,8 +269,8 @@
     }
   },
   "onboarding": {
-    "maintenanceTitle": "We’re renovating GEO Studio",
-    "maintenanceBody": "This workspace is currently undergoing scheduled maintenance while we roll out an updated experience. Some features may be temporarily unavailable or look different than usual.",
+    "maintenanceTitle": "I’m renovating GEO Studio",
+    "maintenanceBody": "This workspace is currently undergoing scheduled maintenance while I roll out an updated experience. Some features may be temporarily unavailable or look different than usual.",
     "maintenanceSubBody": "Thanks for your patience—check back soon for the refreshed GEO Studio.",
     "maintenanceAck": "Got it"
   },
