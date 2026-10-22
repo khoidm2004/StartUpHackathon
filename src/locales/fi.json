@@ -269,6 +269,12 @@
     }
   },
   "onboarding": {
+    "maintenanceTitle": "Uudistamme GEO Studiota",
+    "maintenanceBody": "Tämä työtila on tilapäisesti huollossa, kun otamme käyttöön päivitetyn käyttökokemuksen. Osa ominaisuuksista voi olla tilapäisesti poissa käytöstä tai näyttää erilaiselta kuin tavallisesti.",
+    "maintenanceSubBody": "Kiitos kärsivällisyydestäsi—käy pian uudelleen katsomassa uudistettu GEO Studio.",
+    "maintenanceAck": "Selvä"
+  },
+  "onboardingTour": {
     "welcomeTitle": "Tervetuloa",
     "welcomeBody": "GEO Studio auttaa luomaan monikielistä, brändin mukaista markkinointisisältöä paikallishakuun—ilman jargonia.",
     "brandTitle": "Brändin perusteet",

@@ -3,6 +3,12 @@ import { useTranslation } from "react-i18next";
 
 const STORAGE_KEY = "geo-onboarding-complete";
 
+// Product is under maintenance: the intro window shows a maintenance notice
+// instead of the full product tour below. The tour is kept intact (reading
+// from the "onboardingTour" locale namespace) so it can be restored by
+// flipping this flag back once maintenance ends.
+const MAINTENANCE_MODE = true;
+
 export function Onboarding() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -25,11 +31,52 @@ export function Onboarding() {
     setOpen(false);
   };
 
+  if (!open) return null;
+
+  if (MAINTENANCE_MODE) {
+    return (
+      <div className="modal-overlay" role="dialog" aria-modal="true">
+        <div className="modal">
+          <button
+            type="button"
+            className="modal__close"
+            onClick={finish}
+            aria-label={t("common.close")}
+          >
+            ×
+          </button>
+          <h2 className="modal__title">{t("onboarding.maintenanceTitle")}</h2>
+          <p className="modal__body">{t("onboarding.maintenanceBody")}</p>
+          <p className="modal__body">{t("onboarding.maintenanceSubBody")}</p>
+          <div className="modal__footer">
+            <button type="button" className="btn btn--primary" onClick={finish}>
+              {t("onboarding.maintenanceAck")}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return <OnboardingTour t={t} step={step} setStep={setStep} finish={finish} />;
+}
+
+function OnboardingTour({
+  t,
+  step,
+  setStep,
+  finish,
+}: {
+  t: ReturnType<typeof useTranslation>["t"];
+  step: number;
+  setStep: (fn: (x: number) => number) => void;
+  finish: () => void;
+}) {
   const steps = useMemo(
     () => [
       {
-        title: t("onboarding.welcomeTitle"),
-        body: t("onboarding.welcomeBody"),
+        title: t("onboardingTour.welcomeTitle"),
+        body: t("onboardingTour.welcomeBody"),
         content: (
           <div
             style={{
@@ -45,27 +92,27 @@ export function Onboarding() {
         ),
       },
       {
-        title: t("onboarding.brandTitle"),
-        body: t("onboarding.brandBody"),
+        title: t("onboardingTour.brandTitle"),
+        body: t("onboardingTour.brandBody"),
         content: (
           <div>
             <div className="field" style={{ marginBottom: 12 }}>
               <label className="field__label" htmlFor="ob-industry">
-                {t("onboarding.industry")}
+                {t("onboardingTour.industry")}
               </label>
               <select id="ob-industry" className="select" defaultValue="">
                 <option value="" disabled>
-                  {t("onboarding.selectPlaceholder")}
+                  {t("onboardingTour.selectPlaceholder")}
                 </option>
-                <option>{t("onboarding.industryFood")}</option>
-                <option>{t("onboarding.industryRetail")}</option>
-                <option>{t("onboarding.industryPro")}</option>
+                <option>{t("onboardingTour.industryFood")}</option>
+                <option>{t("onboardingTour.industryRetail")}</option>
+                <option>{t("onboardingTour.industryPro")}</option>
               </select>
             </div>
             <div className="field" style={{ marginBottom: 12 }}>
-              <span className="field__label">{t("onboarding.tone")}</span>
+              <span className="field__label">{t("onboardingTour.tone")}</span>
               <div className="chip-group">
-                {[t("onboarding.toneFriendly"), t("onboarding.toneBold"), t("onboarding.toneCalm")].map(
+                {[t("onboardingTour.toneFriendly"), t("onboardingTour.toneBold"), t("onboardingTour.toneCalm")].map(
                   (label) => (
                     <button key={label} type="button" className="chip">
                       {label}
@@ -76,34 +123,34 @@ export function Onboarding() {
             </div>
             <div className="field">
               <label className="field__label" htmlFor="ob-keyword">
-                {t("onboarding.keywordLabel")}
+                {t("onboardingTour.keywordLabel")}
               </label>
               <input
                 id="ob-keyword"
                 className="input"
-                placeholder={t("onboarding.keywordPh")}
+                placeholder={t("onboardingTour.keywordPh")}
               />
             </div>
           </div>
         ),
       },
       {
-        title: t("onboarding.geoTitle"),
-        body: t("onboarding.geoBody"),
+        title: t("onboardingTour.geoTitle"),
+        body: t("onboardingTour.geoBody"),
         content: (
           <>
             <div className="field" style={{ marginBottom: 12 }}>
               <label className="field__label" htmlFor="ob-geo">
-                {t("onboarding.primaryLocation")}
+                {t("onboardingTour.primaryLocation")}
               </label>
               <input
                 id="ob-geo"
                 className="input"
-                placeholder={t("onboarding.locationPh")}
+                placeholder={t("onboardingTour.locationPh")}
               />
             </div>
             <div className="field">
-              <span className="field__label">{t("onboarding.languages")}</span>
+              <span className="field__label">{t("onboardingTour.languages")}</span>
               <div className="lang-switch" style={{ width: "fit-content" }}>
                 <button type="button" className="active">
                   EN
@@ -115,8 +162,8 @@ export function Onboarding() {
         ),
       },
       {
-        title: t("onboarding.doneTitle"),
-        body: t("onboarding.doneBody"),
+        title: t("onboardingTour.doneTitle"),
+        body: t("onboardingTour.doneBody"),
         content: (
           <div
             style={{
@@ -129,15 +176,13 @@ export function Onboarding() {
             }}
           >
             <strong style={{ color: "var(--near-black)" }}>{t("common.tip")}</strong>{" "}
-            {t("onboarding.doneTip")}
+            {t("onboardingTour.doneTip")}
           </div>
         ),
       },
     ],
     [t],
   );
-
-  if (!open) return null;
 
   const s = steps[step];
   const isLast = step === steps.length - 1;
@@ -182,7 +227,7 @@ export function Onboarding() {
             className="btn btn--primary"
             onClick={() => (isLast ? finish() : setStep((x) => x + 1))}
           >
-            {isLast ? t("onboarding.startCreating") : t("common.next")}
+            {isLast ? t("onboardingTour.startCreating") : t("common.next")}
           </button>
         </div>
       </div>

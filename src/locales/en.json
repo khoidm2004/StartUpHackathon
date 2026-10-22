@@ -269,6 +269,12 @@
     }
   },
   "onboarding": {
+    "maintenanceTitle": "We’re renovating GEO Studio",
+    "maintenanceBody": "This workspace is currently undergoing scheduled maintenance while we roll out an updated experience. Some features may be temporarily unavailable or look different than usual.",
+    "maintenanceSubBody": "Thanks for your patience—check back soon for the refreshed GEO Studio.",
+    "maintenanceAck": "Got it"
+  },
+  "onboardingTour": {
     "welcomeTitle": "Welcome",
     "welcomeBody": "GEO Studio helps you create multilingual, brand-aligned marketing content tuned for local search—without jargon.",
     "brandTitle": "Brand basics",
